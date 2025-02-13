@@ -1,0 +1,23 @@
+<div th:fragment="navbar">
+    <div id="header">
+        <div class="home">
+            <a href="/">
+                <img src="/images/icon-home.svg" alt="홈">
+                홈
+            </a>
+        </div>
+
+        <div class="user">
+            <th:block th:if="${session.user == null}">
+                <a href="/signup">회원가입</a>
+                <a href="/login">로그인</a>
+            </th:block>
+
+            <th:block th:if="${session.user != null}">
+                <h3>환영합니다, <br><span th:text="${session.user.name}"></span> 님!</h3>
+                <a href="/mypage">마이페이지</a>
+                <a href="/logout">로그아웃</a>
+            </th:block>
+        </div>
+    </div>
+</div>

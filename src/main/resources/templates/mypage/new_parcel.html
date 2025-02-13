@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신규 택배</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div id="sub">
+
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div id="container">
+            <div class="sub-title">
+                <p>택배 관리</p>
+            </div>
+            <div class="wrap">
+                <div class="title-mini">
+                    <div>
+                        <p class="title">신규 택배 안내</p>
+                        <span class="mini-text">
+                            현재 발생한 신규 택배 목록입니다.<br>
+                            자세한 사항은 관리실에 문의해주세요.
+                        </span>
+                        <span class="mini-text"></span>
+                        <div class="table-wrap">
+                            <table>
+                                <colgroup>
+                                    <col style="width: 15%;">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>번호</th>
+                                        <th>운송장 번호</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>6900004147609</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>6900004147609</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>6900004147609</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>6900004147609</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>6900004147609</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <a href="#none" class="page-move page-prev">이전 페이지</a>
+                            <a href="#none" class="now">1</a>
+                            <a href="#none">2</a>
+                            <a href="#none">3</a>
+                            <a href="#none">4</a>
+                            <a href="#none">5</a>
+                            <a href="#none" class="page-move page-next">다음 페이지</a>
+                        </div>
+                        <div class="btn-box">
+                            <a href="/mypage">뒤로가기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알림 설정</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div id="sub">
+
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div id="container">
+            <div class="sub-title">
+                <p>알림 설정</p>
+            </div>
+            <div class="wrap">
+                <div class="title-mini my-alarm">
+                    <div>
+                        <p class="title">알림 설정</p>
+                        <span class="mini-text">수신할 아파트 알림을 체크해주세요</span>
+                        <div class="alarm-box">
+                            <ul class="list-checkbox">
+                                <li>
+                                    <input type="checkbox" name="" id="">
+                                    <label for="">새로운 공지사항</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="" id="">
+                                    <label for="">신규 택배</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="" id="">
+                                    <label for="">배송 중</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="" id="">
+                                    <label for="">배송 완료</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="btn-box">
+                    <a href="/mypage">수정 완료</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

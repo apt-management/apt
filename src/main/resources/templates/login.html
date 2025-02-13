@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div id="sub">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div id="container">
+        <div class="sub-title">
+            <p>로그인</p>
+        </div>
+        <div class="wrap">
+            <div class="form login">
+                <p class="title">LOGIN</p>
+                <form method="POST" action="/login">
+                    <ul class="form-list">
+                        <li>
+                            <label for="number">전화번호</label>
+                            <input type="text" id="number" name="number" required autofocus>
+                        </li>
+                        <li>
+                            <label for="password">비밀번호</label>
+                            <input type="password" id="password" name="password" required>
+                        </li>
+                    </ul>
+                    <div class="btn-box">
+                        <button type="submit">로그인</button>
+                    </div>
+                </form>
+                <a href="/repassword" class="re-password">비밀번호 재설정</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        var errorMessage = "[[${loginError}]]";
+        if (errorMessage && errorMessage !== "null" && errorMessage !== "") {
+            alert(errorMessage);
+        }
+
+        var successMessage = "[[${modifySuccess}]]";
+        if (successMessage && successMessage !== "null" && successMessage !== "") {
+            alert(successMessage);
+        }
+    };
+</script>
+
+</body>
+</html>

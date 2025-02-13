@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="users">
+    <resultMap id="userResultMap" type="com.login.Model.User">
+        <id property="number" column="number"/>
+        <result property="userid" column="userid"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+    <select id="login" resultMap="userResultMap">
+        SELECT number, userid, password, name, address
+        FROM users
+        WHERE number=#{number} AND password=#{password}
+    </select>
+
+    <insert id="signup" parameterType="com.login.Model.User">
+        INSERT INTO users (number, userid, password, name, address)
+        VALUES (#{number}, #{userid}, #{password}, #{name}, #{address})
+    </insert>
+
+    <select id="findOne" resultMap="userResultMap" parameterType="com.login.Model.User">
+        SELECT * FROM users
+        WHERE number = #{number}
+    </select>
+
+    <update id="updateUser">
+        UPDATE user
+        SET password = #{password}, name = #{name}, address = #{address}
+        WHERE number = #{number}
+    </update>
+
+    <delete id="deleteUser" parameterType="com.login.Model.User">
+        DELETE FROM users
+        WHERE number = #{number}
+    </delete>
+</mapper>

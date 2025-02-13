@@ -1,0 +1,35 @@
+<ul class="form-list" th:fragment="editUser">
+    <th:block th:if="${session.user == null}">
+        <div>
+            <h1>로그인이 필요한 서비스 입니다.</h1>
+        </div>
+    </th:block>
+
+    <th:block th:if="${session.user != null}">
+        <li>
+            <label for="userid">아이디</label>
+            <input type="text" id="userid" name="userid" th:value="${session.user.userid}" disabled>
+        </li>
+        <li>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" placeholder="영문, 숫자, 특수 문자 포함 8~12자" required>
+        </li>
+        <li>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" th:value="${session.user.name}" required>
+        </li>
+        <li>
+            <label for="number">전화번호</label>
+            <input type="text" id="number" name="number" th:value="${session.user.number}" readonly>
+        </li>
+        <li>
+            <label for="address">거주 구역</label>
+            <input type="text" id="address" name="address" placeholder="OO동" th:value="${session.user.address}" required>
+        </li>
+
+        <div class="btn-box type-02">
+            <a href="/mypage"><button type="button">취소</button></a>
+            <button type="submit">수정</button>
+        </div>
+    </th:block>
+</ul>
