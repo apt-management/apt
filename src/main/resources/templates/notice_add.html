@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 추가</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div id="sub">
+
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div id="container">
+        <div class="sub-title">
+            <p>공지사항 추가</p>
+        </div>
+        <div class="wrap">
+            <div class="title-mini">
+                <form action="/notice/add" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">제목</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">내용</label>
+                        <textarea id="content" name="content" rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attach">첨부파일</label>
+                        <input type="file" id="attach" name="attach">
+                    </div>
+
+                    <button type="submit">공지사항 추가</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

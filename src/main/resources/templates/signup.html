@@ -60,6 +60,78 @@
             alert(errorMessage);
         }
     };
+    $(document).ready(function () {
+        $(".btn-box button:last").click(function (event) {
+            event.preventDefault();
+
+            let number = $("#number").val();
+            let userid = $("#userid").val();
+            let password = $("#password").val();
+            let name = $("#name").val();
+            let address = $("#address").val();
+
+            if (!number) {
+                alert("전화번호를 입력해주세요.");
+                $("#number").focus();
+                return;
+            }
+
+            if (!userid) {
+                alert("아이디를 입력해주세요.");
+                $("#userid").focus();
+                return;
+            }
+
+            if (!password) {
+                alert("비밀번호를 입력해주세요.");
+                $("#password").focus();
+                return;
+            }
+
+            if (!name) {
+                alert("이름을 입력해주세요.");
+                $("#name").focus();
+                return;
+            }
+
+            if (!address) {
+                alert("거주 구역을 입력해주세요.");
+                $("#address").focus();
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                alert("비밀번호는 영문, 숫자, 특수 문자를 포함하여 8~12자로 설정해야 합니다.");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/signup",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    userid: userid,
+                    number: number,
+                    password: password,
+                    name: name,
+                    address: address
+                }),
+                success: function (response) {
+                    alert("회원가입이 완료되었습니다!");
+                    window.location.href = "/login";
+                },
+                error: function (xhr) {
+                    let errorMessage = xhr.responseText || "회원가입 실패. 다시 시도해주세요.";
+                    alert(errorMessage);
+                }
+            });
+        });
+
+        function validatePassword(password) {
+            let regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,12}$/;
+            return regex.test(password);
+        }
+    });
 </script>
 
 </body>

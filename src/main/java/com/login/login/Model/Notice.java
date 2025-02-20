@@ -1,36 +1,53 @@
 package com.login.login.Model;
 
-public class Notice {
-    private int id;
-    private String title;
-    private String createDate;
-    private int views;
+import java.time.LocalDate;
+import jakarta.persistence.*;
 
-    public Notice(int id, String title, String createDate, int views) {
-        this.id = id;
-        this.title = title;
-        this.createDate = createDate;
-        this.views = views;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+public class Notice {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 255)
+    private String title;
+
+    @Column(length = 500)
+    private String content;
+
+    @Column(length = 255)
+    private String attach;
+
+    @Column(nullable = false)
+    private LocalDate createDate;
+
+    @Column(nullable = false)
+    private Integer viewer = 0;
+
+    @PrePersist
+    public void onCreate() {
+        this.createDate = LocalDate.now();
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
 
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public boolean hasAttachment() {
-        // 예시로 첨부파일이 있는지 여부를 랜덤으로 반환
-        return Math.random() > 0.5;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

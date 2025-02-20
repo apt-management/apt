@@ -7,9 +7,25 @@
         SELECT * FROM notice ORDER BY id DESC LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <!-- 전체 공지사항 개수 조회 -->
     <select id="getTotalNotices" resultType="int">
         SELECT COUNT(*) FROM notice
     </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.example.model.Notice">
+        SELECT * FROM notice WHERE id = #{id}
+    </select>
+
+    <select id="getPrevNoticeId" resultType="java.lang.Integer">
+        SELECT id FROM notice WHERE id &lt; #{id} ORDER BY id DESC LIMIT 1
+    </select>
+
+    <select id="getNextNoticeId" resultType="java.lang.Integer">
+        SELECT id FROM notice WHERE id > #{id} ORDER BY id ASC LIMIT 1
+    </select>
+
+    <select id="getRecentNotices" resultType="com.login.login.Model.Notice">
+        SELECT * FROM notice ORDER BY id DESC LIMIT 5
+    </select>
+
 
 </mapper>

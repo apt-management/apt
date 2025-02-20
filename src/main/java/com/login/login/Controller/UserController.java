@@ -43,19 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestParam("number") String number,
-                         @RequestParam("userid") String userid,
-                         @RequestParam("password") String password,
-                         @RequestParam("name") String name,
-                         @RequestParam("address") String address,
-                         Model model) {
-        User user = new User();
-        user.setNumber(number);
-        user.setUserid(userid);
-        user.setPassword(password);
-        user.setName(name);
-        user.setAddress(address);
-
+    public String signup(@RequestBody User user, Model model) {
         boolean success = service.signup(user);
 
         if (success) {

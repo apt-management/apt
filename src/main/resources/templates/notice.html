@@ -43,64 +43,51 @@
                             </thead>
                             <tbody>
                             <tr th:each="notice : ${notices}">
-                                <td th:text="${notice.number}"></td>
+                                <td th:text="${notice.id}"></td>
                                 <td>
-                                    <a th:href="@{/notice/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
+                                    <a th:href="@{/notice/view/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
                                 </td>
                                 <td>
-                                    <img th:src="@{/images/icon-file.svg}" alt="파일" th:if="${notice.attachFile != null}" class="file">
+                                    <img th:if="${notice.attach != null}" src="/images/icon-file.svg" alt="파일" class="file">
                                 </td>
                                 <td th:text="${notice.createDate}"></td>
-                                <td th:text="${notice.viewCount}"></td>
+                                <td th:text="${notice.viewer}"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- 페이지네이션 부분 AJAX 로 갱신 기능 -->
-                    <div class="pagination" id="pagination">
-                        <a href="#none" class="page-move page-prev">이전 페이지</a>
-                        <a href="#none" class="now">1</a>
-                        <a href="#none">2</a>
-                        <a href="#none">3</a>
-                        <a href="#none">4</a>
-                        <a href="#none">5</a>
-                        <a href="#none" class="page-move page-next">다음 페이지</a>
+
+                    <th:block th:if="${totalPages == 0}">
+                        <p class="no-notice">공지사항이 없습니다.</p>
+                    </th:block>
+
+                    <div class="pagination" th:if="${totalPages > 0}">
+                        <a th:if="${currentPage > 1}" th:href="@{/notice(page=${currentPage - 1})}" class="page-move page-prev">이전 페이지</a>
+
+                        <th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                            <a th:href="@{/notice(page=${i})}" th:text="${i}" th:classappend="${i == currentPage} ? 'now' : ''"></a>
+                        </th:block>
+
+                        <a th:if="${currentPage < totalPages}" th:href="@{/notice(page=${currentPage + 1})}" class="page-move page-next">다음 페이지</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        // 페이지네이션 링크 클릭 시
-        $('.pagination a').on('click', function(e) {
-            e.preventDefault();
 
-            var page = $(this).text();  // 클릭된 페이지 번호
-            if (page === '이전 페이지') {
-                page = parseInt($('.pagination .now').text()) - 1;  // 이전 페이지
-            } else if (page === '다음 페이지') {
-                page = parseInt($('.pagination .now').text()) + 1;  // 다음 페이지
-            }
+<style>
+    .pagination a {
+        margin: 0 5px;
+    }
+    .no-notice {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 50px;
+    }
+</style>
 
-            // Ajax로 공지사항을 비동기적으로 요청
-            $.ajax({
-                url: '/notices',
-                data: { page: page },
-                method: 'GET',
-                success: function(response) {
-                    // 공지사항 HTML 업데이트
-                    $('.table-wrap tbody').html(response.noticesHtml);
-                    // 페이지네이션 HTML 업데이트
-                    $('.pagination').html(response.paginationHtml);
-                },
-                error: function() {
-                    alert("공지사항을 불러오는 데 실패했습니다.");
-                }
-            });
-        });
-    });
-</script>
 </body>
 </html>

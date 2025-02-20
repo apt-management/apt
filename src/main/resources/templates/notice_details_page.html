@@ -3,58 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <title>공지사항 상세 페이지</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-    <div id="sub">
+<div id="sub">
 
-        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-        <div id="container">
-            <div class="sub-title">
-                <p>공지사항</p>
-            </div>
-            <div class="wrap">
-                <div class="board-inner">
-                    <div class="board-title">
-                        <p>아파트 운영방침 안내</p>
-                        <div>
-                            <img src="../images/icon-view.svg" alt="조회수">
-                            <span>12</span>
-                        </div>
+    <div id="container">
+        <div class="sub-title">
+            <p>공지사항 추가</p>
+        </div>
+        <div class="wrap">
+            <div class="title-mini">
+                <form action="/notice/add" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">제목</label>
+                        <input type="text" id="title" name="title" required>
                     </div>
-                    <div class="board-content">
-                        <p>공지사항 내용</p>
+
+                    <div class="form-group">
+                        <label for="content">내용</label>
+                        <textarea id="content" name="content" rows="5" required></textarea>
                     </div>
-                    <div class="board-file">
-                        <div>
-                            <p>첨부파일</p>
-                        </div>
-                        <div class="file-wrap">
-                            <ul>
-                                <li>
-                                    <p>1111.jpg</p>
-                                    <a href="#none">다운로드</a>
-                                </li>
-                            </ul>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="attach">첨부파일</label>
+                        <input type="file" id="attach" name="attach">
                     </div>
-                </div>
-                <div class="board-navigation">
-                    <a href="#none" class="board-prev">
-                        <img src="../images/icon-arrow-left.svg" alt="이전 글">
-                        이전 글
-                    </a>
-                    <a href="#none" class="board-next">                        
-                        다음 글
-                        <img src="../images/icon-arrow-right.svg" alt="다음 글">
-                    </a>
-                </div>
+
+                    <button type="submit">공지사항 추가</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
