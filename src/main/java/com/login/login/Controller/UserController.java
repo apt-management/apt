@@ -35,12 +35,18 @@ public class UserController {
 
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("user", user);
+
+            if ("01000000000".equals(user.getNumber()) && "admin1234".equals(user.getPassword())) {
+                return "redirect:/admin/dashboard";
+            }
+
             return "redirect:/";
         } else {
             model.addAttribute("loginError", "전화번호 또는 비밀번호가 잘못되었습니다.");
             return "login";
         }
     }
+
 
     @PostMapping("/signup")
     public String signup(@RequestBody User user, Model model) {

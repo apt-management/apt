@@ -72,8 +72,8 @@
                 $('#temperature').text(Math.round(temperature) + '°C');
                 $('#humidity').text(humidity + '%');
             },
-            error: function() {
-                console.error("날씨 데이터를 가져오는 데 실패했습니다.");
+            error: function(){
+                console.log('날씨 데이터를 가져오는 데 실패했습니다.');
             }
         });
     }

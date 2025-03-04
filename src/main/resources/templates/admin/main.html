@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div id="wrap">
+
+        <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+
+        <div id="container">
+
+            <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+
+            <div id="content" class="home">
+                <ul>
+                    <li>
+                        <img src="/images/main.png" alt="건물사람">
+                    </li>
+                    <li class="robot">
+                        <img src="/images/robot.png" alt="로봇">
+                        <p>택배 로봇</p>
+                        <div class="robot-state">
+                            <p>
+                                <span class="circle circle-green"></span>
+                                운행중
+                            </p>
+                        </div>
+                    </li>
+                    <li class="robot">
+                        <img src="/images/robot.png" alt="로봇">
+                        <p>순찰 로봇</p>
+                        <div class="robot-state">
+                            <p>
+                                <span class="circle circle-green"></span>
+                                이상 없음
+                            </p>
+                        </div>
+                    </li>
+                    <li class="post">
+                        <a href="#none">
+                            <p>신규 배송</p>
+                            <div class="post-total">
+                                <span>1</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="post">
+                        <a href="#none">
+                            <p>배송 중</p>
+                            <div class="post-total">
+                                <span>1</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="post">
+                        <a href="#none">
+                            <p>배송 완료</p>
+                            <div class="post-total">
+                                <span>1</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

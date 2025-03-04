@@ -15,13 +15,12 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
-    @Column(length = 500)
+    @Column(length = 5000)
     private String content;
 
-    @Column(length = 255)
     private String attach;
 
     @Column(nullable = false)

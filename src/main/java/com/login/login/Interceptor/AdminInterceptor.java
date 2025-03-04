@@ -1,29 +1,25 @@
-/*
 package com.login.login.Interceptor;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;s
+import com.login.login.Model.User;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-@Component
 public class AdminInterceptor implements HandlerInterceptor {
+
+    private static final String ADMIN_NUMBER = "01000000000";
+    private static final String ADMIN_PASSWORD = "admin1234";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession();
-        String number = (String) session.getAttribute("number");
+        User user = (User) request.getSession().getAttribute("user");
 
-        // 관리자인 경우
-        if (number != null && "01000000000".equals(number)) {
-            // 계속 진행
-            return true;
-        } else {
-            // 관리자가 아닐 경우 로그인 페이지로 리다이렉트
-            response.sendRedirect("/login");
-            return false;
+        if (user != null && ADMIN_NUMBER.equals(user.getNumber()) && ADMIN_PASSWORD.equals(user.getPassword())) {
+            if (!request.getRequestURI().startsWith("/admin")) {
+                response.sendRedirect("/admin/dashboard");
+                return false;
+            }
         }
+        return true;
     }
 }
-*/

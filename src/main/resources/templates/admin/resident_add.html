@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입주민 정보 추가</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div id="wrap">
+
+    <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+
+    <div id="container">
+
+        <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+
+        <div id="content" class="board">
+            <div class="navigation">
+                <p>HOME</p>
+                <p>></p>
+                <p>입주민 정보</p>
+                <p>></p>
+                <p>입주민 추가</p>
+            </div>
+            <div class="board-inner">
+                <strong class="board-title">입주민 추가</strong>
+
+                <div th:if="${errorMessage}" class="alert alert-danger" style="color: red; font-weight: bold; margin-bottom: 10px;">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <form action="/admin/residents/add" method="POST">
+                    <div class="board-input write">
+                        <table>
+                            <colgroup>
+                                <col style="width: 20%">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td>이름</td>
+                                <td>
+                                    <input type="text" name="name" id="name" placeholder="이름을 입력하세요" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>전화번호</td>
+                                <td>
+                                    <input type="text" name="number" id="number" placeholder="전화번호를 입력하세요" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>거주 구역</td>
+                                <td>
+                                    <input type="text" name="address" id="address" placeholder="거주 구역을 입력하세요" required>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn-wrap btn-wrap-big">
+                        <button type="button" class="btn" onclick="window.location.href='/admin/residents'">취소</button>
+                        <button type="submit" class="btn">저장</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

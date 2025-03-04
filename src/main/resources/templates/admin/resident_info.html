@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입주민 정보</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div id="wrap">
+    <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+
+    <div id="container">
+        <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+
+        <div id="content" class="board">
+            <div class="navigation">
+                <p>HOME</p>
+                <p>></p>
+                <p>입주민 정보</p>
+            </div>
+            <div class="board-inner">
+                <strong class="board-title">입주민 정보</strong>
+
+                <div th:if="${AddComplete}">
+                    <script>
+                        alert('정상적으로 입주민이 추가 되었습니다.');
+                    </script>
+                </div>
+
+                <div th:if="${message}">
+                    <p th:text="${message}"></p>
+                </div>
+
+                <form action="/admin/residents/search" method="GET">
+                    <div class="board-search">
+                        <div class="input-wrap">
+                            <div>
+                                <label for="name">이름</label>
+                                <input type="text" name="name" id="name" class="w180">
+                            </div>
+                            <div>
+                                <label for="number">전화번호</label>
+                                <input type="text" name="number" id="number" placeholder="- 제외 입력" class="w300">
+                            </div>
+                        </div>
+                        <div class="btn-wrap btn-wrap-small">
+                            <button type="button" class="btn" onclick="resetForm()">초기화</button>
+                            <button type="submit" class="btn">검색</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="board-content">
+                    <div class="board-top">
+                        <p>전체 :
+                            <span th:text="${totalResidents}"></span>명
+                        </p>
+                        <div class="btn-wrap btn-wrap-small">
+                            <button type="button" class="btn" onclick="location.href='/admin/residents/add'">추가</button>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <colgroup>
+                                <col style="width: 15%;">
+                                <col>
+                                <col style="width: 25%;">
+                                <col style="width: 20%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>이름</th>
+                                <th>전화번호</th>
+                                <th>거주 구역</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="resident, iterStat : ${residents}">
+                                <td th:text="${iterStat.index + 1}"></td>
+                                <td>
+                                    <a th:href="@{/admin/residents/detail(number=${resident.number})}" th:text="${resident.name}"></a>
+                                </td>
+                                <td th:text="${resident.number}"></td>
+                                <td th:text="${resident.address}"></td>
+                            </tr>
+
+                            <tr th:if="${residents == null or residents.isEmpty()}">
+                                <td colspan="4">등록된 입주민이 없습니다.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" th:if="${totalPages > 0}">
+                    <a th:if="${currentPage > 1}"
+                       th:href="@{/admin/residents(page=${currentPage - 1})}"
+                       class="page-move page-prev">이전 페이지</a>
+
+                    <th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                        <a th:href="@{/admin/residents(page=${i})}"
+                           th:text="${i}"
+                           th:classappend="${i == currentPage} ? 'now' : ''"></a>
+                    </th:block>
+
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{/admin/residents(page=${currentPage + 1})}"
+                       class="page-move page-next">다음 페이지</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function resetForm() {
+        document.getElementById('name').value = '';
+        document.getElementById('number').value = '';
+    }
+</script>
+</body>
+</html>

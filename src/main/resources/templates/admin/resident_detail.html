@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입주민 상세 정보</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div id="wrap">
+
+    <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+
+    <div id="container">
+
+        <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+
+        <div id="content" class="board">
+            <div class="navigation">
+                <p>HOME</p>
+                <p>></p>
+                <p>입주민 상세 정보</p>
+            </div>
+            <div class="board-inner">
+                <strong class="board-title">입주민 상세 정보</strong>
+                <form action="/admin/residents/search" method="POST">
+                <div class="board-input">
+                        <table>
+                            <colgroup>
+                                <col style="width: 20%">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td>이름</td>
+                                <td th:text="${resident.name}"></td>
+                            </tr>
+                            <tr>
+                                <td>전화번호</td>
+                                <td th:text="${resident.number}"></td>
+                            </tr>
+                            <tr>
+                                <td>거주 구역</td>
+                                <td th:text="${resident.address}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn-wrap btn-wrap-big">
+                        <a th:href="@{/admin/residents/update(number=${resident.number})}">
+                            <button type="button" class="btn">수정</button></a>
+                        <a th:href="@{/admin/residents/delete(number=${resident.number})}">
+                            <button type="button" class="btn">삭제</button>
+                        </a>
+                        <a href="/admin/residents"><button type="button" class="btn">목록</button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

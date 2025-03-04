@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div id="wrap">
+
+        <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+
+        <div id="container">
+
+            <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+
+            <div id="content" class="board">
+                <div class="navigation">
+                    <p>HOME</p>
+                    <p>></p>
+                    <p>택배 관리</p>
+                    <p>></p>
+                    <p>신규 택배</p>
+                </div>
+                <div class="board-inner">
+                    <strong class="board-title">신규 택배</strong>
+                    <form action="">
+                        <div class="board-input write">                        
+                            <table>
+                                <colgroup>
+                                    <col style="width: 20%">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td>이름</td>
+                                        <td>
+                                            <input type="text" name="" id="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>전화번호</td>
+                                        <td>
+                                            <input type="text" name="" id="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>거주 구역</td>
+                                        <td>
+                                            <input type="text" name="" id="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>운송장 번호</td>
+                                        <td>
+                                            <input type="text" name="" id="">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn-wrap btn-wrap-big">
+                            <button type="button" class="btn">취소</button>
+                            <button type="button" class="btn">저장</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
