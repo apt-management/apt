@@ -29,4 +29,7 @@ public interface NoticeDao extends JpaRepository<Notice, Integer> {
     @Query("UPDATE Notice n SET n.viewer = n.viewer + 1 WHERE n.id = :id")
     void incrementViewer(@Param("id") int id);
 
+    @Modifying
+    @Query("DELETE FROM Notice n WHERE n.id = :id")
+    void deleteNotice(int id);
 }

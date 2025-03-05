@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>입주민 정보 수정</title>
+    <title>공지사항 추가</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/admin.css">
 </head>
@@ -20,18 +20,11 @@
             <div class="navigation">
                 <p>HOME</p>
                 <p>></p>
-                <p>입주민 정보</p>
-                <p>></p>
-                <p>입주민 정보 수정</p>
+                <p>공지사항 추가</p>
             </div>
             <div class="board-inner">
-                <strong class="board-title">입주민 정보 수정</strong>
-
-                <div th:if="${errorMessage}" class="alert alert-danger" style="color: red; font-weight: bold; margin-bottom: 10px;">
-                    <p th:text="${errorMessage}"></p>
-                </div>
-
-                <form action="/admin/residents/update" method="POST">
+                <strong class="board-title">공지사항</strong>
+                <form action="/admin/notice/add" method="POST" enctype="multipart/form-data">
                     <div class="board-input write">
                         <table>
                             <colgroup>
@@ -40,37 +33,54 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                                <td>이름</td>
+                                <td>제목</td>
                                 <td>
-                                    <input type="text" name="name" id="name" placeholder="이름을 입력하세요" required
-                                           th:value="${resident.name}">
+                                    <input type="text" name="title" id="title" required>
                                 </td>
                             </tr>
                             <tr>
-                                <td>전화번호</td>
+                                <td>작성일</td>
                                 <td>
-                                    <input type="text" name="number" id="number" placeholder="전화번호를 입력하세요"
-                                           th:value="${resident.number}" readonly>
+                                    <input type="date" name="createDate" id="createDate" readonly>
                                 </td>
                             </tr>
                             <tr>
-                                <td>거주 구역</td>
+                                <td>첨부파일</td>
                                 <td>
-                                    <input type="text" name="address" id="address" placeholder="거주 구역을 입력하세요" required
-                                           th:value="${resident.address}">
+                                    <input type="file" name="attach" id="attach">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내용</td>
+                                <td>
+                                    <textarea name="content" id="noticeContent" required></textarea>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="btn-wrap btn-wrap-big">
-                        <button type="submit" class="btn">수정</button>
-                        <a href="/admin/residents"><button type="button" class="btn">목록</button></a>
+                        <button type="button" class="btn" onclick="window.history.back();">취소</button>
+                        <button type="submit" class="btn">저장</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    window.onload = function() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+
+        document.getElementById("createDate").value = today;
+    };
+</script>
+
 </body>
 </html>

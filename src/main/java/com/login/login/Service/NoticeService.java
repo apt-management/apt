@@ -20,4 +20,8 @@ public interface NoticeService {
     void incrementViewer(int id);
 
     List<Notice> getRecentNotices(int limit);
+
+    void deleteNotice(int id);
+
+    void updateNotice(Notice notice);
 }

@@ -3,6 +3,7 @@ package com.login.login.Service;
 import com.login.login.Dao.NoticeDao;
 import com.login.login.Model.Notice;
 import com.login.login.Repository.NoticeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,4 +85,16 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> getRecentNotices(int limit) {
         return noticeRepository.findRecentNotices(limit);
     }
+
+    @Override
+    @Transactional
+    public void deleteNotice(int id) {
+        noticeDao.deleteNotice(id);
+    }
+
+    @Override
+    public void updateNotice(Notice notice) {
+        noticeRepository.save(notice);
+    }
+
 }

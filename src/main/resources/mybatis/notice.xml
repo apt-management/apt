@@ -27,5 +27,8 @@
         SELECT * FROM notice ORDER BY id DESC LIMIT 5
     </select>
 
+    <delete id="deleteNotice" parameterType="int">
+        DELETE FROM notice WHERE id = #{id}
+    </delete>
 
 </mapper>

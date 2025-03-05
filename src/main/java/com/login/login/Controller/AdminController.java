@@ -16,7 +16,7 @@ public class AdminController {
             return "redirect:/login";
         }
 
-        model.addAttribute("message", "관리자 페이지에 오신 것을 환영합니다!");
+        model.addAttribute("message", "관리자 페이지에 오신 것을 환영합니다");
         return "admin/admin_dashboard";
     }
 
