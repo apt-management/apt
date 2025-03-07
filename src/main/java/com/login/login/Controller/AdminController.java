@@ -1,64 +1,98 @@
 package com.login.login.Controller;
 
+import com.login.login.Model.Admin;
+import com.login.login.Service.AdminService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminController {
 
-    @GetMapping("/admin/dashboard")
-    public String adminDashboard(HttpSession session, Model model) {
-        Object userObj = session.getAttribute("user");
+    @Autowired
+    private AdminService adminService;
 
-        if (userObj == null) {
+    @GetMapping("/admin/main")
+    public String adminMain(HttpServletRequest request, HttpSession session, Model model) {
+        Admin admin = (Admin) session.getAttribute("admin");  // Admin 객체로 캐스팅
+
+        if (admin == null) {
             return "redirect:/login";
         }
 
-        model.addAttribute("message", "관리자 페이지에 오신 것을 환영합니다");
-        return "admin/admin_dashboard";
+        model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("admin", admin);  // admin 객체를 모델에 추가
+        return "admin/main";
     }
 
-    // 입주민 정보
-    @GetMapping("/admin/resident_info")
-    public String residentInfo() {
-        return "admin/resident_info";
-    }
 
-    // 공지사항 페이지
-    @GetMapping("/admin/admin_notice")
-    public String notice() {
-        return "admin/notice";
-    }
-
-    // 신규 택배 페이지
     @GetMapping("/admin/new_delivery")
-    public String newDelivery() {
+    public String newDelivery(HttpServletRequest request, Model model) {
+
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/new_delivery";
     }
 
-    // 배송 중 페이지
     @GetMapping("/admin/delivering")
-    public String delivering() {
+    public String delivering(HttpServletRequest request, Model model) {
+
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/delivering";
     }
 
-    // 배송 완료 페이지
     @GetMapping("/admin/delivered")
-    public String delivered() {
+    public String delivered(HttpServletRequest request, Model model) {
+
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/delivered";
     }
 
-    // 순찰 중 이상사항 페이지
     @GetMapping("/admin/patrol_issue")
-    public String patrolIssue() {
+    public String patrolIssue(HttpServletRequest request, Model model) {
+
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/patrol_issue";
     }
 
-    @GetMapping("/admin/main")
-    public String Main() {
-        return "admin/main";
+    @GetMapping("/admin/test")
+    public String testPage() {
+        return "/admin/test";
+    }
+
+    @GetMapping("/admin/rosPost")
+    public String rosPost() {
+        return "/admin/ros_post";
+    }
+
+    @GetMapping("/adminLog")
+    public String adminLogin() {
+        return "/admin/admin_login";
+    }
+    @PostMapping("/adminLog")
+    public String login(@RequestParam String number,
+                        @RequestParam String password,
+                        HttpSession session,
+                        Model model) {
+
+        System.out.println(number + " " + password);
+
+        Admin admin = adminService.getAdminByNumber(number);
+
+        if (adminService.isValidAdmin(number, password)) {
+            session.setAttribute("admin", admin); // number로 세션에 저장
+            System.out.println("valid!");
+
+            return "redirect:/admin/main"; // 로그인 성공 시 관리자 메인 이동
+        } else {
+            model.addAttribute("error", "전화번호 또는 비밀번호가 잘못되었습니다.");
+            System.out.println("invalid!");
+            return "admin/admin_login"; // 로그인 실패 시 다시 로그인 페이지로
+        }
     }
 
 }

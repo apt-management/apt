@@ -30,7 +30,6 @@ public class NoticeRepository {
         return notices;
     }
 
-    // 공지사항 ID로 조회
     public Notice findById(int id) {
         String sql = "SELECT * FROM notice WHERE id = ?";
 
@@ -46,19 +45,17 @@ public class NoticeRepository {
             }
         });
 
-        return notices.isEmpty() ? null : notices.get(0);  // 결과가 없으면 null 반환
+        return notices.isEmpty() ? null : notices.get(0);
     }
 
-    // 공지사항 저장 (Insert 또는 Update 처리)
     public void save(Notice notice) {
-        if (notice.getId() == 0) {  // id가 0이면 새 객체로 판단
-            // Insert - 새 공지사항 추가
+        if (notice.getId() == 0) {
             String sql = "INSERT INTO notice (title, content, attach) VALUES (?, ?, ?)";
             jdbcTemplate.update(sql, notice.getTitle(), notice.getContent(), notice.getAttach());
         } else {
-            // Update - 기존 공지사항 수정
             String sql = "UPDATE notice SET title = ?, content = ?, attach = ? WHERE id = ?";
             jdbcTemplate.update(sql, notice.getTitle(), notice.getContent(), notice.getAttach(), notice.getId());
         }
     }
+
 }

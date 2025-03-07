@@ -187,3 +187,6 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,visualstudiocode,gradle
+
+# 관리자 Number 및 Password
+.env

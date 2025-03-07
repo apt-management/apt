@@ -46,9 +46,9 @@
                                 <td>첨부파일</td>
                                 <td>
                                     <div class="file-wrap">
-                                        <p th:text="${notice.attach}">운영방침 안내.jpg</p>
+                                        <p th:text="${fileName}">운영방침 안내.jpg</p>
                                         <div class="btn-wrap btn-wrap-small">
-                                            <a th:href="@{${notice.attach}}" class="btn">다운로드</a>
+                                            <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" class="btn">다운로드</a>
                                         </div>
                                     </div>
                                 </td>
@@ -63,7 +63,7 @@
                         </table>
                     </div>
                     <div class="btn-wrap btn-wrap-big">
-                        <button type="submit" class="btn">수정</button>
+                        <button type="submit" class="btn">저장</button>
                         <a th:href="@{/admin/notice/delete/{id}(id=${notice.id})}">
                             <button type="button" class="btn">삭제</button>
                         </a>

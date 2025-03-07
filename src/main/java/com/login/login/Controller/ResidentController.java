@@ -2,6 +2,7 @@ package com.login.login.Controller;
 
 import com.login.login.Model.User;
 import com.login.login.Service.ResidentService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +46,7 @@ public class ResidentController {
     public String residentList(@RequestParam(defaultValue = "1") int page,
                                @RequestParam(value = "name", required = false) String name,
                                @RequestParam(value = "number", required = false) String number,
-                               Model model) {
+                               HttpServletRequest request, Model model) {
 
         int pageSize = 10;
 
@@ -65,6 +66,7 @@ public class ResidentController {
 
         model.addAttribute("residents", residents.getContent());
         model.addAttribute("totalResidents", totalResidents);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/resident_info";
     }
 
@@ -72,7 +74,7 @@ public class ResidentController {
     public String searchResidents(@RequestParam(value = "name", required = false) String name,
                                   @RequestParam(value = "number", required = false) String number,
                                   @RequestParam(defaultValue = "1") int page,
-                                  Model model) {
+                                  HttpServletRequest request, Model model) {
 
         int pageSize = 10;
         Page<User> residents;
@@ -88,28 +90,32 @@ public class ResidentController {
         }
 
         model.addAttribute("residents", residents.getContent());
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/resident_info";
     }
 
     @GetMapping("/add")
-    public String addResidentForm() {
+    public String addResidentForm(Model model, HttpServletRequest request) {
+
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/resident_add";
     }
 
     @PostMapping("/add")
-    public String addResident(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String addResident(@ModelAttribute User user, Model model, HttpServletRequest request ,RedirectAttributes redirectAttributes) {
         if (residentService.existsByNumber(user.getNumber())) {
             redirectAttributes.addFlashAttribute("errorMessage", "이미 존재하는 전화번호입니다.");
             return "redirect:/admin/residents/add";
         } else {
             residentService.addResident(user);
             redirectAttributes.addFlashAttribute("AddComplete", "정상적으로 입주민이 추가 되었습니다.");
+            model.addAttribute("requestURI", request.getRequestURI());
             return "redirect:/admin/residents";
         }
     }
 
     @GetMapping("/detail")
-    public String residentDetail(@RequestParam(value = "number", required = false) String number, Model model) {
+    public String residentDetail(@RequestParam(value = "number", required = false) String number, Model model, HttpServletRequest request) {
         if (number == null || number.isEmpty()) {
             return "admin/resident_detail";
         }
@@ -119,11 +125,12 @@ public class ResidentController {
             return "redirect:/admin/residents";
         }
         model.addAttribute("resident", resident);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/resident_detail";
     }
 
     @GetMapping("/update")
-    public String updateResidentForm(@RequestParam(value = "number", required = false) String number, Model model) {
+    public String updateResidentForm(@RequestParam(value = "number", required = false) String number, Model model, HttpServletRequest request) {
         if (number == null || number.isEmpty()) {
             return "redirect:/admin/residents";
         }
@@ -134,6 +141,7 @@ public class ResidentController {
         }
 
         model.addAttribute("resident", resident);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/resident_update";
     }
 

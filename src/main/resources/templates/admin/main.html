@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>main</title>
+    <title>어드민 메인페이지</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/admin.css">
 </head>
@@ -22,27 +22,31 @@
                         <img src="/images/main.png" alt="건물사람">
                     </li>
                     <li class="robot">
-                        <img src="/images/robot.png" alt="로봇">
-                        <p>택배 로봇</p>
-                        <div class="robot-state">
-                            <p>
-                                <span class="circle circle-green"></span>
-                                운행중
-                            </p>
-                        </div>
+                        <a href="/admin/rosPost" target="_blank">
+                            <img src="/images/robot.png" alt="로봇">
+                            <p>택배 로봇</p>
+                            <div class="robot-state">
+                                <p>
+                                    <span class="circle circle-green"></span>
+                                    운행중
+                                </p>
+                            </div>
+                        </a>
                     </li>
                     <li class="robot">
-                        <img src="/images/robot.png" alt="로봇">
-                        <p>순찰 로봇</p>
-                        <div class="robot-state">
-                            <p>
-                                <span class="circle circle-green"></span>
-                                이상 없음
-                            </p>
-                        </div>
+                        <a href="/admin/test" target="_blank">
+                            <img src="/images/robot.png" alt="로봇">
+                            <p>순찰 로봇</p>
+                            <div class="robot-state">
+                                <p>
+                                    <span class="circle circle-green"></span>
+                                    이상 없음
+                                </p>
+                            </div>
+                        </a>
                     </li>
                     <li class="post">
-                        <a href="#none">
+                        <a href="/admin/new_delivery">
                             <p>신규 배송</p>
                             <div class="post-total">
                                 <span>1</span>
@@ -50,7 +54,7 @@
                         </a>
                     </li>
                     <li class="post">
-                        <a href="#none">
+                        <a href="/admin/delivering">
                             <p>배송 중</p>
                             <div class="post-total">
                                 <span>1</span>
@@ -58,7 +62,7 @@
                         </a>
                     </li>
                     <li class="post">
-                        <a href="#none">
+                        <a href="/admin/delivered">
                             <p>배송 완료</p>
                             <div class="post-total">
                                 <span>1</span>

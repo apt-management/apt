@@ -1,0 +1,9 @@
+회원가입 로그인 컨트롤러 및 다른 파일들 전체
+userid
+password
+name
+number
+address
+이렇게 추가 필요
+
+현재 number password address만 구현되어 있음

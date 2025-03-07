@@ -2,6 +2,7 @@ package com.login.login.Controller;
 
 import com.login.login.Service.NoticeService;
 import com.login.login.Model.Notice;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class NoticeController {
     private String uploadDir;
 
     @GetMapping
-    public String noticeList(@RequestParam(defaultValue = "1") int page, Model model) {
+    public String noticeList(@RequestParam(defaultValue = "1") int page, HttpServletRequest request, Model model) {
         int pageSize = 5;
         int totalNotices = noticeService.getTotalCount();
         int totalPages = totalNotices > 0 ? (int) Math.ceil((double) totalNotices / pageSize) : 1;
@@ -39,12 +40,14 @@ public class NoticeController {
         model.addAttribute("notices", notices);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalNotices", totalNotices);
 
         int startPage = ((page - 1) / pageSize) * pageSize + 1;
         int endPage = Math.min(startPage + pageSize - 1, totalPages);
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("requestURI", request.getRequestURI());
 
         return "notice";
     }

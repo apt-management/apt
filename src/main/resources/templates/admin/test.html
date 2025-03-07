@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS Robot Control</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/roslib.min.js"></script>
+    <!-- 차량 주소 -->
+    <script src="/js/config.js"></script>
+    <!-- 배터리 구독 관련 -->
+    <script src="/js/battery_control.js"></script>
+    <style>
+        #wrap {min-width: 1130px;}
+        #robot {display: flex; gap: 20px; width: calc(100% - 100px); margin: 40px 50px;}
+        #robot > div {float: left;}
+        #robot button {display: grid; place-items: center; width: 100%; font-weight: 500; color: #FFF; background: #484848; border-radius: 8px; transition: background .3s; padding: 15px 0;}
+        #robot button:hover {background: #696969;}
+        .robot_title {font-size: 24px; font-weight: 500;}
+        
+        #robot_camera {width: calc(100% - 800px); min-width: 640px; aspect-ratio: 4 / 3;}
+        #robot_camera img {width: 100%;}
+        #robot_control {display: flex; gap: 21px; flex-direction: column; width: 750px;}
+        #robot_control .control_box {display: flex; gap: 10px; flex-direction: column;}
+        #robot_control .control_box p {font-size: 20px; font-weight: 500; margin-bottom: 8px;}
+        #robot_control .control_box div {display: flex; gap: 10px;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <p>순찰 로봇</p>
+            <p id="voltageDisplay">배터리 잔량 확인 중</p>
+        </div>
+        <div id="robot">
+            <div id="robot_camera">
+                <img id="camera-feed" src="http://192.168.137.230:8080/stream?topic=/usb_cam/image_raw" alt="Live Stream" />                
+            </div>
+        
+            <div id="robot_control">
+                <!-- 라인트레이싱 제어 버튼 -->
+                <div class="control_box">
+                    <p>라인 트레이싱</p>
+                    <button id="toggleButton">주행 시작</button>
+                </div>
+            
+                <!-- 모터 제어 버튼 -->
+                <div class="control_box">
+                    <p>로봇 제어</p>    
+                    <div>
+                        <button onclick="sendCommand('stop')">정지</button>
+                    </div>
+                    <div>
+                        <button onclick="sendCommand('forward')">전진</button>
+                        <button onclick="sendCommand('backward')">후진</button>
+                    </div>
+                    <div>
+                        <button onclick="sendCommand('left')">좌회전</button>
+                        <button onclick="sendCommand('right')">우회전</button>
+                    </div>                
+                    <div>
+                        <button onclick="sendCommand('speed fast')">속도 빠르게</button>
+                        <button onclick="sendCommand('speed slow')">속도 느리게</button>
+                        <button onclick="sendCommand('speed normal')">속도 정상</button>
+                    </div>
+                </div>               
+                
+                <!-- 부저 제어 버튼 -->
+                <div class="control_box">
+                    <p>경고음 제어</p>
+                    <button onclick="toggleBuzzer()">경고음 ON/OFF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- 라인트레이싱 제어 -->
+    <script src="/js/line_tracing_control.js"></script>
+    <!-- 모터 제어 명령어 -->
+    <script src="/js/motor_control.js"></script>
+    <!-- 부저 제어 명령어 -->
+    <script src="/js/buzzer_control.js"></script>
+
+</body>
+</html>
+

@@ -1,25 +1,25 @@
 <div id="menu" th:fragment="admin_navbar">
     <ul>
         <li>
-            <a href="/admin/main">홈</a>
+            <a href="/admin/main" th:classappend="${(requestURI != null && #strings.contains(requestURI, 'main')) ? 'on' : ''}">홈</a>
         </li>
         <li>
-            <a href="/admin/residents">입주민 정보</a>
+            <a href="/admin/residents" th:classappend="${(requestURI != null && #strings.contains(requestURI, 'residents')) ? 'on' : ''}">입주민 정보</a>
         </li>
         <li>
-            <a href="/admin/notice">공지사항</a>
+            <a href="/admin/notice" th:classappend="${(requestURI != null && requestURI.startsWith('/admin/notice')) ? 'on' : ''}">공지사항</a>
         </li>
         <li>
-            <a href="/admin/new_delivery">신규 택배</a>
+            <a href="/admin/new_delivery" th:classappend="${(requestURI != null && requestURI.startsWith('/admin/new_delivery')) ? 'on' : ''}">신규 택배</a>
         </li>
         <li>
-            <a href="/admin/delivering">배송 중</a>
+            <a href="/admin/delivering" th:classappend="${(requestURI != null && requestURI.startsWith('/admin/delivering')) ? 'on' : ''}">배송 중</a>
         </li>
         <li>
-            <a href="/admin/delivered">배송 완료</a>
+            <a href="/admin/delivered" th:classappend="${(requestURI != null && requestURI.startsWith('/admin/delivered')) ? 'on' : ''}">배송 완료</a>
         </li>
         <li>
-            <a href="/admin/patrol_issue">순찰 중 이상사항</a>
+            <a href="/admin/patrol_issue" th:classappend="${(requestURI != null && requestURI.startsWith('/admin/patrol_issue')) ? 'on' : ''}">순찰 중 이상사항</a>
         </li>
     </ul>
 </div>

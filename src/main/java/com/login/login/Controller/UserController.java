@@ -37,7 +37,7 @@ public class UserController {
             session.setAttribute("user", user);
 
             if ("01000000000".equals(user.getNumber()) && "admin1234".equals(user.getPassword())) {
-                return "redirect:/admin/dashboard";
+                return "redirect:/admin/main";
             }
 
             return "redirect:/";

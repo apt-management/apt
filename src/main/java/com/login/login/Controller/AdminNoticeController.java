@@ -2,6 +2,7 @@ package com.login.login.Controller;
 
 import com.login.login.Service.NoticeService;
 import com.login.login.Model.Notice;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class AdminNoticeController {
     private NoticeService noticeService;
 
     @GetMapping
-    public String noticeList(@RequestParam(defaultValue = "1") int page, Model model) {
+    public String noticeList(@RequestParam(defaultValue = "1") int page, HttpServletRequest request, Model model) {
         int pageSize = 10;
         int totalNotices = noticeService.getTotalCount();
         int totalPages = totalNotices > 0 ? (int) Math.ceil((double) totalNotices / pageSize) : 1;
@@ -46,24 +47,27 @@ public class AdminNoticeController {
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("requestURI", request.getRequestURI());
 
         return "/admin/notice";
     }
 
     @GetMapping("/detail/{id}")
-    public String getNoticeDetail(@PathVariable("id") int id, Model model) {
+    public String getNoticeDetail(@PathVariable("id") int id, Model model, HttpServletRequest request) {
         Notice notice = noticeService.getNoticeById(id);
         if (notice == null) {
             model.addAttribute("errorMessage", "해당 공지사항을 찾을 수 없습니다.");
             return "redirect:/admin/notice";
         }
         model.addAttribute("notice", notice);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/notice_detail";
     }
 
     @GetMapping("/add")
-    public String addNoticeForm(Model model) {
+    public String addNoticeForm(Model model, HttpServletRequest request) {
         model.addAttribute("notice", new Notice());
+        model.addAttribute("requestURI", request.getRequestURI());
         return "admin/notice_add";
     }
 
@@ -105,10 +109,11 @@ public class AdminNoticeController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editNoticeForm(@PathVariable("id") int id, Model model) {
+    public String editNoticeForm(@PathVariable("id") int id, Model model, HttpServletRequest request) {
         Notice notice = noticeService.getNoticeById(id);
         if (notice == null) {
             model.addAttribute("errorMessage", "해당 공지사항을 찾을 수 없습니다.");
+            model.addAttribute("requestURI", request.getRequestURI());
             return "redirect:/admin/notice";
         }
         model.addAttribute("notice", notice);

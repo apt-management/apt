@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS Post</title>    
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/roslib.min.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/battery_control.js"></script>
+    <style>
+        #wrap {min-width: 1130px;}
+        #robot {display: grid; place-items: center; gap: 20px; width: calc(100% - 100px); margin: 100px auto;}
+        #robot > div {width: 600px; border: 1px solid #484848; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, .1); padding: 20px 25px;}
+        #robot button {display: grid; place-items: center; width: 100%; font-weight: 500; color: #FFF; background: #484848; border-radius: 8px; transition: background .3s; padding: 15px 0;}
+        #robot button:hover {background: #696969;}
+        .robot_title {font-size: 24px; font-weight: 500;}
+
+        .delivery_state {display: grid; place-items: center; height: 80px; background: #484848;}
+        #delivery {font-size: 32px; font-weight: 500; color: #FFF;}
+        .place-check {display: flex; gap: 30px; flex-direction: column;}
+        .place-check ul {display: flex; gap: 20px; align-items: center;}
+        .place-check ul li {display: flex; gap: 10px; align-items: center;}
+        .place-check ul li label {font-size: 18px;}
+        .place-check .btn-box {text-align: right;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <p>택배 운송 로봇</p>
+            <p id="voltageDisplay">배터리 잔량 확인 중</p>
+        </div>
+        <div id="robot">
+            <div class="delivery_state">
+                <span id="delivery">배송 전</span>
+            </div>
+            <div class="place-check">
+                <p class="robot_title">배송지 선택</p>
+                <ul>
+                    <li>
+                        <input type="checkbox" name="" id="place_101" value="101">
+                        <label for="place_101">101동</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="" id="place_102" value="102">
+                        <label for="place_102">102동</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="" id="place_103" value="103">
+                        <label for="place_103">103동</label>
+                    </li>
+                </ul>
+                <div class="btn-box">
+                    <button type="button" onclick="robot_move()">배송 시작</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ROS 연결
+        const ros = new ROSLIB.Ros({
+            url: ROSCAR_WS_URL
+        });
+
+        /* ===== 선택한 구역 통합하여 전송 후 출발 ===== */
+        const robot_state = new ROSLIB.Topic({
+            ros: ros,
+            name: "/robot_state",
+            messageType: "std_msgs/String"
+        });
+
+        const robot_place = new ROSLIB.Topic({
+            ros: ros,
+            name: "/robot_place",
+            messageType: "std_msgs/String"
+        });
+
+        function robot_move() {
+            var val = [];
+
+            // 선택된 구역 확인
+            document.querySelectorAll(".place-check li input:checked").forEach(input => {
+                val.push(input.value);
+            });
+
+            // Message 전송
+            const msg = new ROSLIB.Message({
+                data: `go`
+            });
+
+            const msg02 = new ROSLIB.Message({
+                data: val.join(",")
+            });
+
+            robot_state.publish(msg);
+            robot_place.publish(msg02);
+        }
+
+        /* ===== 현재 배송 상태 ===== */
+        const delivery_state = new ROSLIB.Topic({
+            ros: ros,
+            name: "/delivery_status",
+            messageType: "std_msgs/String"
+        })
+
+        delivery_state.subscribe(function(message){
+            document.getElementById("delivery").innerText = message.data;
+        })
+    </script>
+</body>
+</html>

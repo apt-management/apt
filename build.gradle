@@ -35,6 +35,8 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
     implementation 'org.json:json:20210307'
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+
 
     // implementation 'org.springframework.boot:spring-boot-starter-security'
 }

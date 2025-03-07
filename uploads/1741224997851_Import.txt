@@ -1,0 +1,44 @@
+1. 장기 주차 관리 시스템 / 주 정차 단속 시스템
+2. 불법 택시 단속 시스템 feat.도로교통청
+
+동적 {
+
+자동차
+농장
+소방 (화재감지): 열 감지 시스템 / 비싸;
+물류
+}
+
+정적 {
+
+}
+
+
+
+
+
+
+
+
+
+IntelliJ 로그인 토큰:
+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
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

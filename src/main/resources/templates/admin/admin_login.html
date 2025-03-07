@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div id="wrap">
+        <div id="login">
+            <strong>아파트 관리 시스템</strong>
+            <form action="/adminLog" method="post">
+                <div class="form">
+                    <div class="id">
+                        <input type="text" name="number" placeholder="전화번호" required>
+                    </div>
+                    <div class="password">
+                        <input type="password" name="password" placeholder="비밀번호" required>
+                    </div>
+                    <div class="btn-login">
+                        <button type="submit">로그인</button>
+                    </div>
+                </div>
+            </form>
+            <p th:if="${error}" th:text="${error}" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+</body>
+</html>

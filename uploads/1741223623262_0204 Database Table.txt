@@ -1,0 +1,30 @@
+users 테이블 (02/04수정본)
+
+-- 기존 PK 제약 조건이 존재하면 삭제
+ALTER TABLE "MY_SCHEMA"."회원가입_정보" 
+DROP CONSTRAINT IF EXISTS "PK_회원가입_정보";
+
+-- 기존 테이블이 존재하면 삭제
+DROP TABLE IF EXISTS "MY_SCHEMA"."회원가입_정보";
+
+-- 테이블 생성
+CREATE TABLE "MY_SCHEMA"."회원가입_정보" (
+    "id" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- 회원 ID (PK)
+    "핸드폰_번호" VARCHAR(20) NOT NULL UNIQUE, -- 핸드폰 번호 (중복 불가)
+    "비밀번호" VARCHAR(60) NOT NULL,
+    "주소" VARCHAR(255) NULL -- TEXT 대신 VARCHAR(255) 사용
+);
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+main 테이블 (이름 임시 지정)
+
+-- 기존 테이블이 존재하면 삭제
+DROP TABLE IF EXISTS "MY_SCHEMA"."입주민_정보";
+
+-- 테이블 생성
+CREATE TABLE "MY_SCHEMA"."입주민_정보" (
+    "이름" VARCHAR(50) NOT NULL,
+    "택배_유무" TINYINT(1) DEFAULT 0,  -- 0: 없음, 1: 있음
+    "입주민_사진" VARCHAR(255) NOT NULL
+);

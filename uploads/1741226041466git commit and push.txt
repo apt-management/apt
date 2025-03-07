@@ -1,0 +1,7 @@
+ls
+git status
+git add .
+git commit -m "test commit" << 강제 커밋 된다
+git remote -v
+git push
+git push -u origin master --force
