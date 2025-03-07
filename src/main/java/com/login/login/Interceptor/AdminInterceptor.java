@@ -16,7 +16,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 
         if (user != null && ADMIN_NUMBER.equals(user.getNumber()) && ADMIN_PASSWORD.equals(user.getPassword())) {
             if (!request.getRequestURI().startsWith("/admin")) {
-                response.sendRedirect("/admin/dashboard");
+                response.sendRedirect("/admin/main");
                 return false;
             }
         }

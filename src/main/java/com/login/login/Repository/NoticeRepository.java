@@ -16,7 +16,6 @@ public class NoticeRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // 최근 공지사항 조회
     public List<Notice> findRecentNotices(int limit) {
         String sql = "SELECT id, title FROM notice ORDER BY id DESC LIMIT ?";
 
