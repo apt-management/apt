@@ -39,9 +39,9 @@ document.getElementById('toggleButton').addEventListener('click', function() {
   // 라인트레이싱 시작 또는 멈춤
   if (isAutoMode) {
     setAuto(true);  // 라인트레이싱 시작
-    document.getElementById('toggleButton').textContent = 'Stop Line Tracing';  // 버튼 텍스트 변경
+    document.getElementById('toggleButton').textContent = '주행 정지';  // 버튼 텍스트 변경
   } else {
     setAuto(false);  // 라인트레이싱 멈춤
-    document.getElementById('toggleButton').textContent = 'Start Line Tracing';  // 버튼 텍스트 변경
+    document.getElementById('toggleButton').textContent = '주행 시작';  // 버튼 텍스트 변경
   }
 });

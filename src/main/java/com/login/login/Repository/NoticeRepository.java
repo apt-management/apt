@@ -26,7 +26,6 @@ public class NoticeRepository {
             return notice;
         });
 
-        System.out.println("조회된 공지사항 개수: " + notices.size());
         return notices;
     }
 

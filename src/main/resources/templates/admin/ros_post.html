@@ -15,6 +15,8 @@
         #robot > div {width: 600px; border: 1px solid #484848; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, .1); padding: 20px 25px;}
         #robot button {display: grid; place-items: center; width: 100%; font-weight: 500; color: #FFF; background: #484848; border-radius: 8px; transition: background .3s; padding: 15px 0;}
         #robot button:hover {background: #696969;}
+        input[type="checkbox"] {display: block; width: 20px; aspect-ratio: 1; background: url(/images/icon-checkbox-off.svg) center/contain no-repeat;}
+        input[type="checkbox"]:checked {background-image: url(/images/icon-checkbox-on.svg);}
         .robot_title {font-size: 24px; font-weight: 500;}
 
         .delivery_state {display: grid; place-items: center; height: 80px; background: #484848;}
@@ -97,6 +99,9 @@
 
             robot_state.publish(msg);
             robot_place.publish(msg02);
+
+            // 백엔드 코드 가져오기
+
         }
 
         /* ===== 현재 배송 상태 ===== */

@@ -8,70 +8,93 @@
     <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
-    <div id="wrap">
-
-        <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
-
-        <div id="container">
-
-            <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
-
-            <div id="content" class="home">
-                <ul>
-                    <li>
-                        <img src="/images/main.png" alt="건물사람">
-                    </li>
-                    <li class="robot">
-                        <a href="/admin/rosPost" target="_blank">
-                            <img src="/images/robot.png" alt="로봇">
-                            <p>택배 로봇</p>
-                            <div class="robot-state">
-                                <p>
-                                    <span class="circle circle-green"></span>
-                                    운행중
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="robot">
-                        <a href="/admin/test" target="_blank">
-                            <img src="/images/robot.png" alt="로봇">
-                            <p>순찰 로봇</p>
-                            <div class="robot-state">
-                                <p>
-                                    <span class="circle circle-green"></span>
-                                    이상 없음
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="post">
-                        <a href="/admin/new_delivery">
-                            <p>신규 배송</p>
-                            <div class="post-total">
-                                <span>1</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="post">
-                        <a href="/admin/delivering">
-                            <p>배송 중</p>
-                            <div class="post-total">
-                                <span>1</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="post">
-                        <a href="/admin/delivered">
-                            <p>배송 완료</p>
-                            <div class="post-total">
-                                <span>1</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<div id="wrap">
+    <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+    <div id="container">
+        <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+        <div id="content" class="home">
+            <ul>
+                <li>
+                    <a href="javascript:void(0);" onclick="toggleGate()">
+                        <img id="GateImage" src="/images/main.png" alt="차단봉" />
+                    </a>
+                </li>
+                <li class="robot">
+                    <a href="/admin/rosPost" target="_blank">
+                        <img src="/images/robot.png" alt="로봇">
+                        <p>택배 로봇</p>
+                        <div class="robot-state">
+                            <p>
+                                <span class="circle circle-green"></span>
+                                운행중
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <li class="robot">
+                    <a href="/admin/rosPolice" target="_blank">
+                        <img src="/images/robot.png" alt="로봇">
+                        <p>순찰 로봇</p>
+                        <div class="robot-state">
+                            <p>
+                                <span class="circle circle-green"></span>
+                                이상 없음
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <li class="post">
+                    <a href="/admin/new_delivery">
+                        <p>신규 배송</p>
+                        <div class="post-total">
+                            <span>1</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="post">
+                    <a href="/admin/delivering">
+                        <p>배송 중</p>
+                        <div class="post-total">
+                            <span>1</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="post">
+                    <a href="/admin/delivered">
+                        <p>배송 완료</p>
+                        <div class="post-total">
+                            <span>1</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
+<script>
+    let gateState = false; // false는 닫힘 상태, true는 열림 상태
+
+    function toggleGate() {
+        // 버튼을 클릭하면 현재 상태에 따라 명령을 보냄
+        const command = gateState ? "lower" : "up";
+        fetch(`http://192.168.137.14/gate_control?cmd=${command}`, {
+            method: 'GET',
+            mode: 'no-cors'  // CORS 정책을 무시하려고 시도
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                // 상태 반전
+                gateState = !gateState;
+                // 이미지를 변경 (차단봉 열기/닫기 상태)
+                const image = document.getElementById("GateImage");
+                if (gateState) {
+                    image.src = "/images/main.png"; // 차단봉 열림 이미지
+                } else {
+                    image.src = "/images/main.png"; // 차단봉 닫힘 이미지
+                }
+            });
+    }
+</script>
 </body>
 </html>

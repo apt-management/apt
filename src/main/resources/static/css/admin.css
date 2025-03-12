@@ -84,7 +84,8 @@ input[type='date']::-webkit-calendar-picker-indicator {position: absolute; top: 
 
 /* btn-wrap */
 .btn-wrap {display: flex; align-items: center;}
-.btn-wrap > * {display: grid; place-items: center; font-size: 18px; font-weight: 500; color: #FFF; background: #484848;}
+.btn-wrap > * {display: grid; place-items: center; font-size: 18px; font-weight: 500; color: #FFF; background: #484848; transition: background .3s;}
+.btn-wrap > *:hover {background: #696969;}
 .btn-wrap.btn-wrap-small {gap: 10px;}
 .btn-wrap.btn-wrap-small > * {width: 100px; height: 40px; border-radius: 5px;}
 .btn-wrap.btn-wrap-big {gap: 40px; justify-content: center; position: absolute; bottom: 50px; width: 1445px;}
@@ -100,7 +101,8 @@ input[type='date']::-webkit-calendar-picker-indicator {position: absolute; top: 
 #login .form > div input {width: 450px; height: 58px; font-weight: 500; background: #E7E7E7; border: 1px solid transparent; border-radius: 8px; transition: all .5s; padding: 20px 29px;}
 #login .form > div input:focus {outline: none; border-color: #BDBDBD;}
 #login .form > div input::placeholder {font-weight: 500; color: #484848;}
-#login .form > div button {display: grid; place-items: center; width: 100%; font-weight: 500; color: #FFF; background: #484848; border-radius: 8px; padding: 20px 0;}
+#login .form > div button {display: grid; place-items: center; width: 100%; font-weight: 500; color: #FFF; background: #484848; border-radius: 8px; transition: background .3s; padding: 20px 0;}
+#login .form > div button:hover {background: #696969;}
 
 /* ===== 2.0 로그인 END ===== */
 

@@ -45,11 +45,10 @@ function updateBuzzerStatus(state) {
     const buzzerStatusElement = document.getElementById("buzzer-status");
 
     if (state === 1) {
-        buzzerStatusElement.textContent = "Buzzer is ON";
-        playBuzzerSound();  // 부저 음 울리기
+        buzzerStatusElement.textContent = "경고음 ON";
     } else if (state === 0) {
-        buzzerStatusElement.textContent = "Buzzer is OFF";
+        buzzerStatusElement.textContent = "경고음 OFF";
     } else {
-        buzzerStatusElement.textContent = "Failed to control Buzzer";
+        buzzerStatusElement.textContent = "경고음 제어 오류";
     }
 }

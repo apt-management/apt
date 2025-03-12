@@ -19,14 +19,14 @@ public class AdminController {
 
     @GetMapping("/admin/main")
     public String adminMain(HttpServletRequest request, HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("admin");  // Admin 객체로 캐스팅
+        Admin admin = (Admin) session.getAttribute("admin");
 
         if (admin == null) {
             return "redirect:/login";
         }
 
         model.addAttribute("requestURI", request.getRequestURI());
-        model.addAttribute("admin", admin);  // admin 객체를 모델에 추가
+        model.addAttribute("admin", admin);
         return "admin/main";
     }
 
@@ -59,9 +59,9 @@ public class AdminController {
         return "admin/patrol_issue";
     }
 
-    @GetMapping("/admin/test")
+    @GetMapping("/admin/rosPolice")
     public String testPage() {
-        return "/admin/test";
+        return "/admin/ros_police";
     }
 
     @GetMapping("/admin/rosPost")
@@ -79,20 +79,21 @@ public class AdminController {
                         HttpSession session,
                         Model model) {
 
-        System.out.println(number + " " + password);
-
         Admin admin = adminService.getAdminByNumber(number);
 
         if (adminService.isValidAdmin(number, password)) {
-            session.setAttribute("admin", admin); // number로 세션에 저장
-            System.out.println("valid!");
+            session.setAttribute("admin", admin);
 
-            return "redirect:/admin/main"; // 로그인 성공 시 관리자 메인 이동
+            return "redirect:/admin/main";
         } else {
             model.addAttribute("error", "전화번호 또는 비밀번호가 잘못되었습니다.");
-            System.out.println("invalid!");
-            return "admin/admin_login"; // 로그인 실패 시 다시 로그인 페이지로
+            return "admin/admin_login";
         }
+    }
+
+    @GetMapping("/admin/issueDetail")
+    public String issueDetail() {
+        return "/admin/patrol_issue_detail";
     }
 
 }

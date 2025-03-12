@@ -35,7 +35,7 @@
         </div>
         <div id="robot">
             <div id="robot_camera">
-                <img id="camera-feed" src="http://192.168.137.230:8080/stream?topic=/usb_cam/image_raw" alt="Live Stream" />                
+                <img id="camera-feed" src="http://192.168.137.201:8080/stream?topic=/usb_cam/image_raw" alt="Live Stream" />
             </div>
         
             <div id="robot_control">
@@ -69,7 +69,7 @@
                 <!-- 부저 제어 버튼 -->
                 <div class="control_box">
                     <p>경고음 제어</p>
-                    <button onclick="toggleBuzzer()">경고음 ON/OFF</button>
+                    <button id="buzzer-status" onclick="toggleBuzzer()">경고음 ON/OFF</button>
                 </div>
             </div>
         </div>
