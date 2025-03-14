@@ -77,7 +77,7 @@
     function toggleGate() {
         // 버튼을 클릭하면 현재 상태에 따라 명령을 보냄
         const command = gateState ? "lower" : "up";
-        fetch(`http://192.168.137.14/gate_control?cmd=${command}`, {
+        fetch(`http://192.168.137.128/gate_control?cmd=${command}`, {
             method: 'GET',
             mode: 'no-cors'  // CORS 정책을 무시하려고 시도
         })

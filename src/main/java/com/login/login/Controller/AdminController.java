@@ -86,7 +86,7 @@ public class AdminController {
 
             return "redirect:/admin/main";
         } else {
-            model.addAttribute("error", "ÀüÈ­¹øÈ£ ¶Ç´Â ºñ¹Ğ¹øÈ£°¡ Àß¸øµÇ¾ú½À´Ï´Ù.");
+            model.addAttribute("error", "ì „í™”ë²ˆí˜¸ ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ê°€ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.");
             return "admin/admin_login";
         }
     }

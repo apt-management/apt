@@ -28,6 +28,7 @@
                 <strong class="board-title">신규 택배</strong>
                 <form action="/admin/delivery/add" method="POST">
                     <div class="board-input write">
+                        <input type="hidden" id="create_at" value="date">
                         <table>
                             <colgroup>
                                 <col style="width: 20%">
@@ -45,21 +46,21 @@
                             <tr>
                                 <td>전화번호</td>
                                 <td>
-                                    <input type="text" name="number" id="number" required>
+                                    <input type="text" name="number" id="number" placeholder="- 제외 입력" required>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>거주 구역</td>
                                 <td>
-                                    <input type="text" name="address" id="address" required>
+                                    <input type="text" name="address" id="address" placeholder="OOO동" required>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>운송장 번호</td>
                                 <td>
-                                    <input type="text" name="trackingNumber" id="trackingNumber" required>
+                                    <input type="text" name="trackingNumber" id="trackingNumber" placeholder="- 제외 입력" required>
                                 </td>
                             </tr>
 
