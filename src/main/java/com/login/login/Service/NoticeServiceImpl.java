@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
     private NoticeDao noticeDao;
 
-    private final NoticeRepository noticeRepository;
+    @Autowired
+    private NoticeRepository noticeRepository;
 
     @Override
     public int getTotalCount() {

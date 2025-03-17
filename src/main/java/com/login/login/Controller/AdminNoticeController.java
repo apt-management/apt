@@ -3,6 +3,7 @@ package com.login.login.Controller;
 import com.login.login.Model.Notice;
 import com.login.login.Service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/notice")
+@RequiredArgsConstructor
 public class AdminNoticeController {
 
     @Value("${file.upload-dir}")

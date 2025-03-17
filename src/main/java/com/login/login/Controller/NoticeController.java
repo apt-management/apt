@@ -1,8 +1,10 @@
 package com.login.login.Controller;
 
-import com.login.login.Service.NoticeService;
+
 import com.login.login.Model.Notice;
+import com.login.login.Service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/notice")
+@RequiredArgsConstructor
 public class NoticeController {
 
     @Autowired
@@ -37,6 +40,7 @@ public class NoticeController {
         }
 
         List<Notice> notices = noticeService.getNoticesByPage(page, pageSize);
+
         model.addAttribute("notices", notices);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROS Post</title>    
+    <title>ROS Post</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/admin.css">
     <script src="/js/roslib.min.js"></script>
@@ -29,91 +29,181 @@
     </style>
 </head>
 <body>
-    <div id="wrap">
-        <div id="header">
-            <p>택배 운송 로봇</p>
-            <p id="voltageDisplay">배터리 잔량 확인 중</p>
+<div id="wrap">
+    <div id="header">
+        <p>택배 운송 로봇</p>
+        <p id="voltageDisplay">배터리 잔량 확인 중</p>
+    </div>
+    <div id="robot">
+        <div class="delivery_state">
+            <span id="delivery">배송 전</span>
         </div>
-        <div id="robot">
-            <div class="delivery_state">
-                <span id="delivery">배송 전</span>
-            </div>
-            <div class="place-check">
-                <p class="robot_title">배송지 선택</p>
-                <ul>
-                    <li>
-                        <input type="checkbox" name="" id="place_101" value="101">
-                        <label for="place_101">101동</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="" id="place_102" value="102">
-                        <label for="place_102">102동</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="" id="place_103" value="103">
-                        <label for="place_103">103동</label>
-                    </li>
-                </ul>
-                <div class="btn-box">
-                    <button type="button" onclick="robot_move()">배송 시작</button>
-                </div>
+        <div class="place-check">
+            <p class="robot_title">배송지 선택</p>
+            <ul>
+                <li>
+                    <input type="checkbox" name="place" id="place_101" value="101">
+                    <label for="place_101">101동</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="place" id="place_102" value="102">
+                    <label for="place_102">102동</label>
+                </li>
+                <li>
+                    <input type="checkbox" name="place" id="place_103" value="103">
+                    <label for="place_103">103동</label>
+                </li>
+            </ul>
+            <div class="btn-box">
+                <button type="button" onclick="robot_move()">배송 시작</button>
             </div>
         </div>
     </div>
+</div>
+<script>
+    // ROS 연결
+    const ros = new ROSLIB.Ros({
+        url: ROSCAR_WS_URL
+    });
 
-    <script>
-        // ROS 연결
-        const ros = new ROSLIB.Ros({
-            url: ROSCAR_WS_URL
+    // 로봇 상태 변경을 위한 ROS Topic
+    const robot_state = new ROSLIB.Topic({
+        ros: ros,
+        name: "/robot_state",
+        messageType: "std_msgs/String"
+    });
+
+    // 배송지 구역 정보를 전달할 ROS Topic
+    const robot_place = new ROSLIB.Topic({
+        ros: ros,
+        name: "/robot_place",
+        messageType: "std_msgs/String"
+    });
+
+    // 배송 상태 업데이트 함수
+    const delivery_state = new ROSLIB.Topic({
+        ros: ros,
+        name: "/delivery_status",
+        messageType: "std_msgs/String"
+    });
+
+    // 배송 상태 구독
+    delivery_state.subscribe(function(message){
+        document.getElementById("delivery").innerText = message.data; // 배송 상태 표시
+    });
+
+    // 배터리 상태 모니터링 (선택 사항)
+    const battery_state = new ROSLIB.Topic({
+        ros: ros,
+        name: "/battery_status",
+        messageType: "std_msgs/String"
+    });
+
+    battery_state.subscribe(function(message) {
+        document.getElementById("voltageDisplay").innerText = "배터리 잔량: " + message.data; // 배터리 상태 업데이트
+    });
+
+    // 로봇 이동 함수 (배송 시작)
+    function robot_move() {
+        var selectedPlaces = [];
+
+        // 선택된 구역 확인
+        document.querySelectorAll(".place-check li input:checked").forEach(input => {
+            selectedPlaces.push(input.value); // 선택된 동을 배열에 추가
         });
 
-        /* ===== 선택한 구역 통합하여 전송 후 출발 ===== */
-        const robot_state = new ROSLIB.Topic({
-            ros: ros,
-            name: "/robot_state",
-            messageType: "std_msgs/String"
-        });
-
-        const robot_place = new ROSLIB.Topic({
-            ros: ros,
-            name: "/robot_place",
-            messageType: "std_msgs/String"
-        });
-
-        function robot_move() {
-            var val = [];
-
-            // 선택된 구역 확인
-            document.querySelectorAll(".place-check li input:checked").forEach(input => {
-                val.push(input.value);
+        // 선택된 구역이 하나 이상이라면
+        if (selectedPlaces.length > 0) {
+            // 로봇 상태를 '배송 중'으로 설정하여 배송 시작
+            const moveMessage = new ROSLIB.Message({
+                data: "배송 중"
             });
 
-            // Message 전송
-            const msg = new ROSLIB.Message({
-                data: `go`
+            // 선택된 구역 정보를 쉼표로 구분하여 메시지로 전송
+            const placeMessage = new ROSLIB.Message({
+                data: selectedPlaces.join(",")
             });
 
-            const msg02 = new ROSLIB.Message({
-                data: val.join(",")
-            });
+            // 로봇 상태 및 배송지 정보 전송
+            robot_state.publish(moveMessage);
+            robot_place.publish(placeMessage);
 
-            robot_state.publish(msg);
-            robot_place.publish(msg02);
-
-            // 백엔드 코드 가져오기
-
+            // 배송 상태 업데이트 (배송 중으로 변경)
+            document.getElementById("delivery").innerText = "배송 중";
+        } else {
+            alert("배송지 구역을 선택해주세요.");
         }
+    }
+</script>
+<!--<script>
+    // ROS 연결
+    const ros = new ROSLIB.Ros({
+        url: ROSCAR_WS_URL
+    });
 
-        /* ===== 현재 배송 상태 ===== */
-        const delivery_state = new ROSLIB.Topic({
-            ros: ros,
-            name: "/delivery_status",
-            messageType: "std_msgs/String"
-        })
+    // 로봇 상태 변경을 위한 ROS Topic
+    const robot_state = new ROSLIB.Topic({
+        ros: ros,
+        name: "/robot_state",
+        messageType: "std_msgs/String"
+    });
 
-        delivery_state.subscribe(function(message){
-            document.getElementById("delivery").innerText = message.data;
-        })
-    </script>
+    // 배송지 구역 정보를 전달할 ROS Topic
+    const robot_place = new ROSLIB.Topic({
+        ros: ros,
+        name: "/robot_place",
+        messageType: "std_msgs/String"
+    });
+
+    // 로봇 이동 함수 (배송 시작)
+    function robot_move() {
+        var selectedPlaces = [];
+
+        // 선택된 구역 확인
+        document.querySelectorAll(".place-check li input:checked").forEach(input => {
+            selectedPlaces.push(input.value); // 선택된 동을 배열에 추가
+        });
+
+        // 로봇 상태를 'go'로 설정하여 배송 시작
+        const moveMessage = new ROSLIB.Message({
+            data: "go"
+        });
+
+        // 선택된 구역 정보를 쉼표로 구분하여 메시지로 전송
+        const placeMessage = new ROSLIB.Message({
+            data: selectedPlaces.join(",")
+        });
+
+        // 로봇 상태 및 배송지 정보 전송
+        robot_state.publish(moveMessage);
+        robot_place.publish(placeMessage);
+
+        // 이후, 로봇이 배송을 시작하게 될 것입니다.
+    }
+
+    // 배송 상태 업데이트 함수
+    const delivery_state = new ROSLIB.Topic({
+        ros: ros,
+        name: "/delivery_status",
+        messageType: "std_msgs/String"
+    });
+
+    // 배송 상태 구독
+    delivery_state.subscribe(function(message){
+        document.getElementById("delivery").innerText = message.data; // 배송 상태 표시
+    });
+
+    // 배터리 상태 모니터링 코드 (예시로 추가 가능)
+    // 배터리 상태를 실시간으로 표시하려면 이 코드에서 로봇 배터리 상태 메시지를 받아와서 화면에 출력
+    const battery_state = new ROSLIB.Topic({
+        ros: ros,
+        name: "/battery_status",
+        messageType: "std_msgs/String"
+    });
+
+    battery_state.subscribe(function(message) {
+        document.getElementById("voltageDisplay").innerText = "배터리 잔량: " + message.data; // 배터리 상태 업데이트
+    });
+</script>-->
 </body>
 </html>

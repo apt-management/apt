@@ -22,7 +22,7 @@
             </div>
             <div class="board-inner">
                 <strong class="board-title">신규 택배</strong>
-                <form action="/admin/delivery/list" method="GET">
+                <form action="/admin/delivery/search" method="GET">
                     <div class="board-search">
                         <div class="input-wrap">
                             <div>
@@ -46,7 +46,7 @@
                 </form>
                 <div class="board-content">
                     <div class="board-top">
-                        <p>전체 : <span th:text="${totalCount}"></span>개</p>
+                        <p>총 배송 건수: <span th:text="${totalDelivery}"></span>개</p>
                         <div class="btn-wrap btn-wrap-small">
                             <a href="/admin/delivery/add" class="btn">추가</a>
                         </div>
@@ -74,37 +74,35 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:if="${#lists.isEmpty(deliveries)}">
-                                <td colspan="7">조회된 데이터가 없습니다.</td>
-                            </tr>
+                                <tr th:each="deliveries : ${deliveries}">
+                                    <td th:text="${deliveries.id}"></td>
+                                    <td th:text="${deliveries.name}"></td>
+                                    <td th:text="${deliveries.number}"></td>
+                                    <td th:text="${deliveries.address}"></td>
+                                    <td th:text="${deliveries.trackingNumber}"></td>
+                                    <td th:text="${deliveries.status}"></td>
+                                    <td>발송 전</td>
+                                </tr>
 
-                            <tr th:each="delivery : ${deliveries}">
-                                <td th:text="${delivery.id}"></td>
-                                <td th:text="${delivery.name}"></td>
-                                <td th:text="${delivery.number}"></td>
-                                <td th:text="${delivery.address}"></td>
-                                <td th:text="${delivery.trackingNumber}"></td>
-                                <td th:text="${delivery.status}"></td>
-                                <td th:text="${delivery.notificationSent ? '발송 완료' : '발송 전'}"></td>
-                            </tr>
+                                <tr th:if="${deliveries == null or deliveries.isEmpty()}">
+                                    <td colspan="7">등록된 데이터가 없습니다.</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="pagination">
+                    <div class="pagination" th:if="${totalPages > 0}">
                         <a th:if="${currentPage > 1}"
-                           th:href="@{/admin/delivery/list?page=1&name=${param.name}&number=${param.number}&trackingNumber=${param.trackingNumber}}"
+                           th:href="@{/admin/delivery(page=${currentPage - 1})}"
                            class="page-move page-prev">이전 페이지</a>
 
-                        <th:block th:if="${totalPages != null}">
-                            <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                <a th:href="@{/admin/delivery/list?page=${i}&name=${param.name}&number=${param.number}&trackingNumber=${param.trackingNumber}}"
-                                   th:text="${i}"
-                                   th:classappend="${i == currentPage} ? 'now' : ''"></a>
-                            </th:block>
+                        <th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                            <a th:href="@{/admin/delivery(page=${i})}"
+                               th:text="${i}"
+                               th:classappend="${i == currentPage} ? 'now' : ''"></a>
                         </th:block>
 
                         <a th:if="${currentPage < totalPages}"
-                           th:href="@{/admin/delivery/list?page=${totalPages}&name=${param.name}&number=${param.number}&trackingNumber=${param.trackingNumber}}"
+                           th:href="@{/admin/delivery(page=${currentPage + 1})}"
                            class="page-move page-next">다음 페이지</a>
                     </div>
                 </div>

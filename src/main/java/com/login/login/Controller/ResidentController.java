@@ -3,6 +3,7 @@ package com.login.login.Controller;
 import com.login.login.Model.User;
 import com.login.login.Service.ResidentService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +12,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/residents")
+@RequiredArgsConstructor
 public class ResidentController {
 
     private final ResidentService residentService;
-
-    public ResidentController(ResidentService residentService) {
-        this.residentService = residentService;
-    }
 
     private void setPaginationAndModel(int page, int totalResidents, int pageSize, Model model, String searchQuery) {
         int totalPages = totalResidents > 0 ? (int) Math.ceil((double) totalResidents / pageSize) : 1;

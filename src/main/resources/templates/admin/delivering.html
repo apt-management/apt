@@ -3,160 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>배달 중</title>
+    <title>배송 중</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
-    <div id="wrap">
-
-        <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
-
-        <div id="container">
-
-            <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
-
-            <div id="content" class="board">
-                <div class="navigation">
-                    <p>HOME</p>
-                    <p>></p>
-                    <p>택배 관리</p>
-                    <p>></p>
-                    <p>배송 중</p>
-                </div>
-                <div class="board-inner">
-                    <strong class="board-title">배송 중</strong>
-                    <form action="">
-                        <div class="board-search">
-                            <div class="input-wrap">
-                                <div>
-                                    <label for="">이름</label>
-                                    <input type="text" name="" id="" class="w180">
-                                </div>
-                                <div>
-                                    <label for="">전화번호</label>
-                                    <input type="text" name="" id="" class="w300">
-                                </div>
-                                <div>
-                                    <label for="">운송장 번호</label>
-                                    <input type="text" name="" id="" class="w300">
-                                </div>
+<div id="wrap">
+    <div th:replace="~{fragments/admin_headerbar :: admin_headerbar}"></div>
+    <div id="container">
+        <div th:replace="~{fragments/admin_navbar :: admin_navbar}"></div>
+        <div id="content" class="board">
+            <div class="navigation">
+                <p>HOME</p>
+                <p>></p>
+                <p>택배 관리</p>
+                <p>></p>
+                <p>배송 중</p>
+            </div>
+            <div class="board-inner">
+                <strong class="board-title">배송 중</strong>
+                <form action="/admin/delivering">
+                    <div class="board-search">
+                        <div class="input-wrap">
+                            <div>
+                                <label for="name">이름</label>
+                                <input type="text" name="" id="name" class="w180">
                             </div>
-                            <div class="btn-wrap btn-wrap-small">
-                                <button type="button" class="btn">초기화</button>
-                                <button type="button" class="btn">검색</button>
+                            <div>
+                                <label for="number">전화번호</label>
+                                <input type="text" name="" id="number" class="w300">
+                            </div>
+                            <div>
+                                <label for="trackingNumber">운송장 번호</label>
+                                <input type="text" name="" id="trackingNumber" class="w300">
                             </div>
                         </div>
-                    </form>
-                    <div class="board-content">
-                        <div class="board-top">
-                            <p>전체 : <span>100</span>개</p>
+                        <div class="btn-wrap btn-wrap-small">
+                            <button type="button" class="btn">초기화</button>
+                            <button type="button" class="btn">검색</button>
                         </div>
-                        <div class="table-wrap">
-                            <table>
-                                <colgroup>
-                                    <col style="width: 15%;">
-                                    <col>
-                                    <col style="width: 20%;">
-                                    <col>
-                                    <col style="width: 25%;">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th>번호</th>
-                                        <th>이름</th>
-                                        <th>전화번호</th>
-                                        <th>거주 구역</th>
-                                        <th>운송장 번호</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="pagination">
-                            <a href="#none" class="page-move page-prev">이전 페이지</a>
-                            <a href="#none" class="now">1</a>
-                            <a href="#none">2</a>
-                            <a href="#none">3</a>
-                            <a href="#none">4</a>
-                            <a href="#none">5</a>
-                            <a href="#none" class="page-move page-next">다음 페이지</a>
-                        </div>
+                    </div>
+                </form>
+                <div class="board-content">
+                    <div class="board-top">
+                        <p>전체 : <span th:text="${totalDelivery}"></span>개</p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <colgroup>
+                                <col style="width: 15%;">
+                                <col>
+                                <col style="width: 20%;">
+                                <col>
+                                <col style="width: 25%;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>이름</th>
+                                <th>전화번호</th>
+                                <th>거주 구역</th>
+                                <th>운송장 번호</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="deliveries : ${deliveries}">
+                                <td th:text="${deliveries.id}"></td>
+                                <td th:text="${deliveries.name}"></td>
+                                <td th:text="${deliveries.number}"></td>
+                                <td th:text="${deliveries.address}"></td>
+                                <td th:text="${deliveries.trackingNumber}"></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(deliveries)}">
+                                <td colspan="5">등록된 데이터가 없습니다.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" th:if="${totalPages > 0}">
+                        <a th:if="${currentPage > 1}"
+                           th:href="@{/admin/delivering(page=${currentPage - 1})}"
+                           class="page-move page-prev">이전 페이지</a>
+
+                        <th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                            <a th:href="@{/admin/delivering(page=${i})}"
+                               th:text="${i}"
+                               th:classappend="${i == currentPage} ? 'now' : ''"></a>
+                        </th:block>
+
+                        <a th:if="${currentPage < totalPages}"
+                           th:href="@{/admin/delivering(page=${currentPage + 1})}"
+                           class="page-move page-next">다음 페이지</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

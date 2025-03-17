@@ -2,23 +2,20 @@ package com.login.login.Service;
 
 import com.login.login.Model.Delivery;
 import com.login.login.Repository.DeliveryRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
-
-    @Override
-    public Page<Delivery> getDeliveries(Pageable pageable) {
-        return deliveryRepository.findAll(pageable);
-    }
 
     @Override
     public void addDelivery(Delivery delivery) {
@@ -29,7 +26,23 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
+    public Page<Delivery> getDelivery(int page, int pageSize) {
+        return deliveryRepository.findAll(PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public Page<Delivery> searchDelivery(String name, String number, int page, int pageSize) {
+        return deliveryRepository.findByNameContainingAndNumberContaining(name, number, PageRequest.of(page, pageSize));
+    }
+
+    @Override
+    public long getTotalDeliveryCount() {
+        return deliveryRepository.count();
+    }
+
+    @Override
     public List<Delivery> getAllDeliveries() {
         return deliveryRepository.findAll();
     }
+
 }

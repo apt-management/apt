@@ -1,4 +1,8 @@
 package com.login.login.Dao;
 
-public interface DeliveryDao {
+import com.login.login.Model.Delivery;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DeliveryDao extends JpaRepository<Delivery, Long> {
+
 }

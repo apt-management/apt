@@ -2,8 +2,10 @@ package com.login.login.Controller;
 
 import com.login.login.Model.Admin;
 import com.login.login.Service.AdminService;
+import com.login.login.Service.DeliveryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+
+    private final DeliveryService deliveryService;
 
     @GetMapping("/admin/main")
     public String adminMain(HttpServletRequest request, HttpSession session, Model model) {
@@ -25,17 +31,13 @@ public class AdminController {
             return "redirect:/login";
         }
 
+        long totalDelivery = deliveryService.getTotalDeliveryCount();
+
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("admin", admin);
+        model.addAttribute("totalDelivery", totalDelivery);
+
         return "admin/main";
-    }
-
-
-    @GetMapping("/admin/new_delivery")
-    public String newDelivery(HttpServletRequest request, Model model) {
-
-        model.addAttribute("requestURI", request.getRequestURI());
-        return "admin/new_delivery";
     }
 
     @GetMapping("/admin/delivering")
