@@ -30,16 +30,16 @@
                         <div class="board-search">
                             <div class="input-wrap">
                                 <div>
-                                    <label for="">이름</label>
-                                    <input type="text" name="" id="" class="w180">
+                                    <label for="name">이름</label>
+                                    <input type="text" name="" id="name" class="w180">
                                 </div>
                                 <div>
-                                    <label for="">전화번호</label>
-                                    <input type="text" name="" id="" class="w300">
+                                    <label for="number">전화번호</label>
+                                    <input type="text" name="" id="number" class="w300">
                                 </div>
                                 <div>
-                                    <label for="">운송장 번호</label>
-                                    <input type="text" name="" id="" class="w300">
+                                    <label for="trackingNumber">운송장 번호</label>
+                                    <input type="text" name="" id="trackingNumber" class="w300">
                                 </div>
                             </div>
                             <div class="btn-wrap btn-wrap-small">
@@ -50,7 +50,7 @@
                     </form>
                     <div class="board-content">
                         <div class="board-top">
-                            <p>전체 : <span>100</span>개</p>
+                            <p>전체 : <span th:text="${totalDelivered}"></span>개</p>
                         </div>
                         <div class="table-wrap">
                             <table>
@@ -72,98 +72,37 @@
                                         <th>배송일</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
+                                    <tr th:each="deliveries : ${deliveries}">
+                                        <td th:text="${deliveries.id}"></td>
+                                        <td th:text="${deliveries.name}"></td>
+                                        <td th:text="${deliveries.number}"></td>
+                                        <td th:text="${deliveries.address}"></td>
+                                        <td th:text="${deliveries.trackingNumber}"></td>
+                                        <!--<td th:text="${deliveries.deliveredAt}"></td>--> <!--나중에 배송 완료되면 날짜 들어가도록 해야 함-->
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td>홍길동</td>
-                                        <td>010-1234-5678</td>
-                                        <td>101동</td>
-                                        <td>6900004147609</td>
-                                        <td>2025-02-05</td>
+
+                                    <tr th:if="${#lists.isEmpty(deliveries)}">
+                                        <td colspan="5">등록된 데이터가 없습니다.</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pagination">
-                            <a href="#none" class="page-move page-prev">이전 페이지</a>
-                            <a href="#none" class="now">1</a>
-                            <a href="#none">2</a>
-                            <a href="#none">3</a>
-                            <a href="#none">4</a>
-                            <a href="#none">5</a>
-                            <a href="#none" class="page-move page-next">다음 페이지</a>
+                        <div class="pagination" th:if="${totalPages > 0}">
+                            <a th:if="${currentPage > 1}"
+                               th:href="@{/admin/delivered(page=${currentPage - 1})}"
+                               class="page-move page-prev">이전 페이지</a>
+
+                            <th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                                <a th:href="@{/admin/delivered(page=${i})}"
+                                   th:text="${i}"
+                                   th:classappend="${i == currentPage} ? 'now' : ''"></a>
+                            </th:block>
+
+                            <a th:if="${currentPage < totalPages}"
+                               th:href="@{/admin/delivered(page=${currentPage + 1})}"
+                               class="page-move page-next">다음 페이지</a>
                         </div>
                     </div>
                 </div>

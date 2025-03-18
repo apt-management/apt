@@ -20,7 +20,7 @@ public class MyPageController {
         long totalDelivery = deliveryService.getTotalDeliveryCount();
         model.addAttribute("totalDelivery", totalDelivery);
 
-        return "/mypage";
+        return "mypage";
     }
 
     @GetMapping("/deliver")

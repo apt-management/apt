@@ -45,4 +45,22 @@ public class DeliveryServiceImpl implements DeliveryService {
         return deliveryRepository.findAll();
     }
 
+    @Transactional
+    public void changePendingToInProgress(String address) {
+        int updatedCount = deliveryRepository.rosPost(address);
+        System.out.println("업데이트된 배송 건수: " + updatedCount);
+    }
+
+    public boolean rosPost(String address, String status) {
+        List<Delivery> deliveries = deliveryRepository.findByAddress(address);
+        if (!deliveries.isEmpty()) {
+            for (Delivery delivery : deliveries) {
+                delivery.setStatus(status);
+                deliveryRepository.save(delivery);
+            }
+            System.out.println("Updated " + deliveries.size() + " deliveries status to: " + status);
+            return true;
+        }
+        return false;
+    }
 }

@@ -15,4 +15,8 @@ public interface DeliveryService {
     Page<Delivery> searchDelivery(String name, String number, int page, int pageSize);
 
     long getTotalDeliveryCount();
+
+    void changePendingToInProgress(String address);
+
+    boolean rosPost(String address, String status);
 }

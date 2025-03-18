@@ -39,6 +39,7 @@ public class AdminNoticeController {
         }
 
         List<Notice> notices = noticeService.getNoticesByPage(page, pageSize);
+
         model.addAttribute("notices", notices);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);

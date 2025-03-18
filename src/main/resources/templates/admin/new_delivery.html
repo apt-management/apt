@@ -63,16 +63,17 @@
                                 <col style="width: 15%;">
                             </colgroup>
                             <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>이름</th>
-                                <th>전화번호</th>
-                                <th>거주 구역</th>
-                                <th>운송장 번호</th>
-                                <th>배송 상태</th>
-                                <th>알림 발송 여부</th>
-                            </tr>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>이름</th>
+                                    <th>전화번호</th>
+                                    <th>거주 구역</th>
+                                    <th>운송장 번호</th>
+                                    <th>배송 상태</th>
+                                    <th>알림 발송 여부</th>
+                                </tr>
                             </thead>
+
                             <tbody>
                                 <tr th:each="deliveries : ${deliveries}">
                                     <td th:text="${deliveries.id}"></td>
@@ -81,7 +82,7 @@
                                     <td th:text="${deliveries.address}"></td>
                                     <td th:text="${deliveries.trackingNumber}"></td>
                                     <td th:text="${deliveries.status}"></td>
-                                    <td>발송 전</td>
+                                    <td>X</td>
                                 </tr>
 
                                 <tr th:if="${deliveries == null or deliveries.isEmpty()}">

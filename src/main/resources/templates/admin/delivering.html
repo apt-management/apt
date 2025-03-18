@@ -46,7 +46,7 @@
                 </form>
                 <div class="board-content">
                     <div class="board-top">
-                        <p>전체 : <span th:text="${totalDelivery}"></span>개</p>
+                        <p>전체 : <span th:text="${totalDelivering}"></span>개</p>
                     </div>
                     <div class="table-wrap">
                         <table>
@@ -67,16 +67,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="deliveries : ${deliveries}">
-                                <td th:text="${deliveries.id}"></td>
-                                <td th:text="${deliveries.name}"></td>
-                                <td th:text="${deliveries.number}"></td>
-                                <td th:text="${deliveries.address}"></td>
-                                <td th:text="${deliveries.trackingNumber}"></td>
-                            </tr>
-                            <tr th:if="${#lists.isEmpty(deliveries)}">
-                                <td colspan="5">등록된 데이터가 없습니다.</td>
-                            </tr>
+                                <tr th:each="deliveries : ${deliveries}">
+                                    <td th:text="${deliveries.id}"></td>
+                                    <td th:text="${deliveries.name}"></td>
+                                    <td th:text="${deliveries.number}"></td>
+                                    <td th:text="${deliveries.address}"></td>
+                                    <td th:text="${deliveries.trackingNumber}"></td>
+                                </tr>
+
+                                <tr th:if="${#lists.isEmpty(deliveries)}">
+                                    <td colspan="5">등록된 데이터가 없습니다.</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

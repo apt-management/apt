@@ -55,7 +55,7 @@
                     <a href="/admin/delivering">
                         <p>배송 중</p>
                         <div class="post-total">
-                            <span>1</span>
+                            <span th:text="${totalDelivering}"></span>
                         </div>
                     </a>
                 </li>
@@ -63,7 +63,7 @@
                     <a href="/admin/delivered">
                         <p>배송 완료</p>
                         <div class="post-total">
-                            <span>1</span>
+                            <span th:text="${totalDelivered}"></span>
                         </div>
                     </a>
                 </li>

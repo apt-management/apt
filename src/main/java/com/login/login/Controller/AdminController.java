@@ -1,6 +1,7 @@
 package com.login.login.Controller;
 
 import com.login.login.Model.Admin;
+import com.login.login.Model.Delivery;
 import com.login.login.Service.AdminService;
 import com.login.login.Service.DeliveryService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
@@ -20,8 +24,8 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-
-    private final DeliveryService deliveryService;
+    @Autowired
+    private DeliveryService deliveryService;
 
     @GetMapping("/admin/main")
     public String adminMain(HttpServletRequest request, HttpSession session, Model model) {
@@ -31,28 +35,78 @@ public class AdminController {
             return "redirect:/login";
         }
 
-        long totalDelivery = deliveryService.getTotalDeliveryCount();
+        List<Delivery> deliveryList = deliveryService.getAllDeliveries();
 
-        model.addAttribute("requestURI", request.getRequestURI());
+        List<Delivery> newDeliveryList = new ArrayList<>();
+        List<Delivery> deliveringList = new ArrayList<>();
+        List<Delivery> deliveredList = new ArrayList<>();
+
+        for (Delivery d : deliveryList) {
+            switch (d.getStatus()) {
+                case "배송 전":
+                    newDeliveryList.add(d);
+                    break;
+                case "배송 중":
+                    deliveringList.add(d);
+                    break;
+                case "배송 완료":
+                    deliveredList.add(d);
+                    break;
+            }
+        }
+
+        long totalDelivery = newDeliveryList.size();
+        long totalDelivering = deliveringList.size();
+        long totalDelivered = deliveredList.size();
+
         model.addAttribute("admin", admin);
+        model.addAttribute("requestURI", request.getRequestURI());
+
         model.addAttribute("totalDelivery", totalDelivery);
+        model.addAttribute("totalDelivering", totalDelivering);
+        model.addAttribute("totalDelivered", totalDelivered);
 
         return "admin/main";
     }
 
     @GetMapping("/admin/delivering")
     public String delivering(HttpServletRequest request, Model model) {
+        List<Delivery> deliveryList = deliveryService.getAllDeliveries();
+
+        List<Delivery> deliveringList = new ArrayList<>();
+        for (Delivery d : deliveryList) {
+            if (d.getStatus().equals("배송 중")) {
+                deliveringList.add(d);
+            }
+        }
+
+        long totalDelivering = deliveringList.size();
 
         model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("deliveries", deliveringList);
+        model.addAttribute("totalDelivering", totalDelivering);
         return "admin/delivering";
     }
 
     @GetMapping("/admin/delivered")
     public String delivered(HttpServletRequest request, Model model) {
+        List<Delivery> deliveryList = deliveryService.getAllDeliveries();
+
+        List<Delivery> deliveredList = new ArrayList<>();
+        for (Delivery d : deliveryList) {
+            if (d.getStatus().equals("배송 완료")) {
+                deliveredList.add(d);
+            }
+        }
+
+        long totalDelivered = deliveredList.size();
 
         model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("deliveries", deliveredList);
+        model.addAttribute("totalDelivered", totalDelivered);
         return "admin/delivered";
     }
+
 
     @GetMapping("/admin/patrol_issue")
     public String patrolIssue(HttpServletRequest request, Model model) {
@@ -75,6 +129,7 @@ public class AdminController {
     public String adminLogin() {
         return "/admin/admin_login";
     }
+
     @PostMapping("/adminLog")
     public String login(@RequestParam String number,
                         @RequestParam String password,
