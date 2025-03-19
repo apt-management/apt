@@ -61,6 +61,7 @@ public class DeliveryController {
         page = (page < 1) ? 0 : page - 1;
 
         Page<Delivery> delivery;
+
         if (name == null && number == null) {
             delivery = deliveryService.getDelivery(page, pageSize);
         } else {
@@ -86,6 +87,15 @@ public class DeliveryController {
         model.addAttribute("requestURI", request.getRequestURI());
         return "admin/new_delivery";
     }
+
+//    @GetMapping("/rosPost")
+//    public String Delivering(@RequestParam(value = "status", required = false) String status,
+//                             HttpServletRequest request, Model model) {
+//
+//        System.out.println(status);
+//
+//        return "admin/ros_post";
+//    }
 
     private void setPaginationAndModel(int page, int totalDelivery, int pageSize, Model model, String searchQuery) {
         int totalPages = totalDelivery > 0 ? (int) Math.ceil((double) totalDelivery / pageSize) : 1;

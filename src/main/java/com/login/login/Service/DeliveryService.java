@@ -19,4 +19,8 @@ public interface DeliveryService {
     void changePendingToInProgress(String address);
 
     boolean rosPost(String address, String status);
+
+//    Page<Delivery> getDelivering(String address, String status);
+//
+//    Page<Delivery> serchDelivering(String status);
 }

@@ -121,13 +121,27 @@ public class AdminController {
     }
 
     @GetMapping("/admin/rosPost")
-    public String rosPost() {
+    public String rosPost(Model model) {
+
+        List<Delivery> deliveryList = deliveryService.getAllDeliveries();
+        List<Delivery> deliveries = new ArrayList<>();
+        for(Delivery d : deliveryList) {
+            if(d.getStatus().equals("배송 전")){
+                deliveries.add(d);
+            }
+        }
+//
+//        if(deliveries.size() == 0){
+//
+//        }
+
+        model.addAttribute("deliveries", deliveries);
         return "/admin/ros_post";
     }
 
     @GetMapping("/adminLog")
     public String adminLogin() {
-        return "/admin/admin_login";
+        return "admin/admin_login";
     }
 
     @PostMapping("/adminLog")
