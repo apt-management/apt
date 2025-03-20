@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -117,7 +119,7 @@ public class AdminController {
 
     @GetMapping("/admin/rosPolice")
     public String testPage() {
-        return "/admin/ros_police";
+        return "admin/ros_police";
     }
 
     @GetMapping("/admin/rosPost")
@@ -125,17 +127,21 @@ public class AdminController {
 
         List<Delivery> deliveryList = deliveryService.getAllDeliveries();
         List<Delivery> deliveries = new ArrayList<>();
-        for(Delivery d : deliveryList) {
-            if(d.getStatus().equals("배송 전")){
-                deliveries.add(d);
+
+        Set<String> uniqueAddresses = new HashSet<>();
+
+        for (Delivery d : deliveryList) {
+            if (d.getStatus().equals("배송 전") &&
+                    (d.getAddress().equals("101동") || d.getAddress().equals("102동") || d.getAddress().equals("103동"))) {
+
+                if (uniqueAddresses.add(d.getAddress())) {
+                    deliveries.add(d);
+                }
             }
         }
-//
-//        if(deliveries.size() == 0){
-//
-//        }
 
         model.addAttribute("deliveries", deliveries);
+
         return "/admin/ros_post";
     }
 
@@ -164,7 +170,7 @@ public class AdminController {
 
     @GetMapping("/admin/issueDetail")
     public String issueDetail() {
-        return "/admin/patrol_issue_detail";
+        return "admin/patrol_issue_detail";
     }
 
 }

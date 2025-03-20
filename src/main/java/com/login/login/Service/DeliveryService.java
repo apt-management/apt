@@ -20,7 +20,5 @@ public interface DeliveryService {
 
     boolean rosPost(String address, String status);
 
-//    Page<Delivery> getDelivering(String address, String status);
-//
-//    Page<Delivery> serchDelivering(String status);
+    void updateDeliveryStatus(String address, String status);
 }

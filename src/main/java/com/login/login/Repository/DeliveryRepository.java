@@ -24,4 +24,5 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     int rosPost(@Param("address") String address);
 
     List<Delivery> findByAddress(String address);
+
 }

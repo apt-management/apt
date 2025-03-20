@@ -1,6 +1,7 @@
 package com.login.login.Service;
 
 import com.login.login.Model.Delivery;
+import com.login.login.Model.DeliveryRequest;
 import com.login.login.Repository.DeliveryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,4 +65,28 @@ public class DeliveryServiceImpl implements DeliveryService {
         }
         return false;
     }
+
+    private List<DeliveryRequest> deliveryRequests = new ArrayList<>();
+
+    // 배송 요청 추가
+    public void addDeliveryRequest(DeliveryRequest request) {
+        deliveryRequests.add(request);
+    }
+
+    // 배송 요청 목록 반환
+    public List<DeliveryRequest> getAllDeliveryRequests() {
+        return deliveryRequests;
+    }
+
+    // 특정 배송 요청 상태 업데이트
+    public void updateDeliveryStatus(String deliveryId, String newStatus) {
+        // 실제로는 DB에서 `deliveryId`로 찾고 상태를 업데이트해야 합니다
+        for (DeliveryRequest request : deliveryRequests) {
+            if (request.getAddress().equals(deliveryId)) {
+                request.setStatus(newStatus);
+                break;
+            }
+        }
+    }
+
 }

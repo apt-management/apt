@@ -88,15 +88,6 @@ public class DeliveryController {
         return "admin/new_delivery";
     }
 
-//    @GetMapping("/rosPost")
-//    public String Delivering(@RequestParam(value = "status", required = false) String status,
-//                             HttpServletRequest request, Model model) {
-//
-//        System.out.println(status);
-//
-//        return "admin/ros_post";
-//    }
-
     private void setPaginationAndModel(int page, int totalDelivery, int pageSize, Model model, String searchQuery) {
         int totalPages = totalDelivery > 0 ? (int) Math.ceil((double) totalDelivery / pageSize) : 1;
 
@@ -168,4 +159,13 @@ public class DeliveryController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("배송 상태 업데이트 실패");
         }
     }
+
+    // 배송 요청 상태 업데이트
+    @PostMapping("/updateDeliveryStatus")
+    public String updateDeliveryStatus(@RequestBody DeliveryRequest request) {
+        // request.getAddress()는 실제 배송 ID로 바꾸세요.
+        deliveryService.updateDeliveryStatus(request.getAddress(), request.getStatus());
+        return "{\"message\": \"배송 상태가 업데이트되었습니다.\"}";
+    }
 }
+
